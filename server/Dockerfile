@@ -23,4 +23,4 @@ COPY . /app
 EXPOSE 8000
 
 # Entrypoint
-ENTRYPOINT ["waitress-serve", "--port=8000", "--call", "app:create_app"]
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
