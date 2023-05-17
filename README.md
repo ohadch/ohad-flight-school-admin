@@ -2,6 +2,12 @@
 
 ## Local Development
 
+### Run the DB
+
+```bash
+docker-compose up -d db
+```
+
 ### Migrations
 
 ```bash
