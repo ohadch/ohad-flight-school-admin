@@ -1,6 +1,7 @@
 import os
 
 import dotenv
+from starlette.middleware.cors import CORSMiddleware
 
 dotenv.load_dotenv(
     dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env")
@@ -10,7 +11,13 @@ from fastapi import FastAPI
 from server.routers import members
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():

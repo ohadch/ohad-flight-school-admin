@@ -1,1 +1,1 @@
-export * from "./types";
+export * from "./models/member/types.ts";

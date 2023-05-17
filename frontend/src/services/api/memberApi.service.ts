@@ -1,8 +1,10 @@
 import {ModelApi} from "./modelApi.service.ts";
-import {IMember} from "../../@types";
+import {IMember, IMemberCreate, IMemberUpdate} from "../../@types";
 
-export class MemberApiService extends ModelApi<IMember> {
+class MemberApiService extends ModelApi<IMember, IMemberCreate, IMemberUpdate> {
     constructor() {
         super("/members");
     }
 }
+
+export const memberApiService = new MemberApiService();

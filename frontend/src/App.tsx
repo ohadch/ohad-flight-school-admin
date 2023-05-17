@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useEffect, useState} from 'react'
 import './App.css'
+import {IMember, IMemberCreate} from "./@types";
+import {memberApiService} from "./services/api";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [members, setMembers] = useState<IMember[]>([]);
+    const [newMemberName, setNewMemberName] = useState<string>("");
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        memberApiService.get().then((members) => {
+            setMembers(members);
+        });
+    }, []);
+
+    const addMember = () => {
+        const newMember: IMemberCreate = {
+            name: newMemberName,
+        };
+        memberApiService.create(newMember).then((member) => {
+            setMembers([...members, member]);
+            setNewMemberName("");
+        });
+    }
+
+    const deleteMember = (member: IMember) => {
+        memberApiService.delete(member.id).then(() => {
+            setMembers(members.filter((m) => m.id !== member.id));
+        });
+    }
+
+    const updateMember = (member: IMember) => {
+        memberApiService.update(member.id, member).then((updatedMember) => {
+            setMembers(
+                members.map((m) => (m.id === updatedMember.id ? updatedMember : m))
+            );
+        });
+    }
+
+
+    return (
+        <>
+            <div>
+                <input
+                    type="text"
+                    value={newMemberName}
+                    onChange={(e) => setNewMemberName(e.target.value)}
+                />
+                <button onClick={addMember}>Add</button>
+            </div>
+            <div>
+                <ul>
+                    {members.map((member) => (
+                        <li key={member.id}>
+                            <input
+                                type="text"
+                                value={member.name}
+                                onChange={(e) =>
+                                    updateMember({...member, name: e.target.value})
+                                }
+                            />
+                            <button onClick={() => deleteMember(member)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
+    )
 }
 
 export default App
