@@ -17,10 +17,15 @@ function App() {
         const newMember: IMemberCreate = {
             name: newMemberName,
         };
-        memberApiService.create(newMember).then((member) => {
-            setMembers([...members, member]);
-            setNewMemberName("");
-        });
+        memberApiService
+            .create(newMember)
+            .then((member) => {
+                setMembers([...members, member]);
+                setNewMemberName("");
+            })
+            .catch((err) => {
+                alert(err);
+            })
     }
 
     const deleteMember = (member: IMember) => {

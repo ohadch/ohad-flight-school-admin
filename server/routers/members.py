@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from server.config.dependencies import get_db
 from server.models import Member
-from server.schemas.members import MemberSchema, MemberCreateSchema, MemberUpdateSchema
+from server.schemas.member import MemberSchema, MemberCreateSchema, MemberUpdateSchema
 
 router = APIRouter(
     prefix="/members",
