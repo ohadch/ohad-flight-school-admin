@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -15,11 +15,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import List from '@mui/material/List';
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {Route, Routes, useLocation} from "react-router-dom";
 import MembersPage from "./pages/members/MembersPage.tsx";
 import EndorsementsPage from './pages/endorsements/EndorsementsPage.tsx';
-import { Link } from '@mui/icons-material';
 
 const DRAWER_WIDTH: number = 240;
 
@@ -28,30 +27,24 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const ROUTES = [
-    {
-        path: "/members",
-        element: <MembersPage />,
-        icon: <PersonIcon />,
-        name: "Members",
-    },
-    {
-        path: "/endorsements",
-        element: <EndorsementsPage />,
-        icon: <PersonIcon />,
-        name: "Endorsements",
-    }
+  {
+    path: "/members",
+    element: <MembersPage />,
+    icon: <PersonIcon />,
+    name: "Members",
+  },
+  {
+    path: "/endorsements",
+    element: <EndorsementsPage />,
+    icon: <PersonIcon />,
+    name: "Endorsements",
+  }
 ]
 
-const router = createBrowserRouter(
-    ROUTES.map((route) => ({
-        path: route.path,
-        element: route.element,
-    }))
-);
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
+})<AppBarProps>(({theme, open}) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -67,8 +60,8 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
+    ({theme, open}) => ({
         '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
@@ -97,14 +90,15 @@ const defaultTheme = createTheme();
 
 export default function App() {
     const [open, setOpen] = React.useState(true);
+    const {pathname} = useLocation();
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
+            <Box sx={{display: 'flex'}}>
+                <CssBaseline/>
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
@@ -118,23 +112,23 @@ export default function App() {
                             onClick={toggleDrawer}
                             sx={{
                                 marginRight: '36px',
-                                ...(open && { display: 'none' }),
+                                ...(open && {display: 'none'}),
                             }}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography
                             component="h1"
                             variant="h6"
                             color="inherit"
                             noWrap
-                            sx={{ flexGrow: 1 }}
+                            sx={{flexGrow: 1}}
                         >
                             Gliding Course Management
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
+                                <NotificationsIcon/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -149,18 +143,23 @@ export default function App() {
                         }}
                     >
                         <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </Toolbar>
-                    <Divider />
+                    <Divider/>
                     <List component="nav">
                         <React.Fragment>
                             {ROUTES.map((route) => (
-                                <ListItemButton key={route.path} href={route.path}>
+                                <ListItemButton 
+                                key={route.path}
+                                component="a"
+                                href={route.path}
+                                selected={pathname === route.path}
+                                >
                                     <ListItemIcon>
                                         {route.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={route.name} />
+                                    <ListItemText primary={route.name}/>
                                 </ListItemButton>
                             ))}
                         </React.Fragment>
@@ -178,9 +177,13 @@ export default function App() {
                         overflow: 'auto',
                     }}
                 >
-                    <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <RouterProvider router={router} />
+                    <Toolbar/>
+                    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+                        <Routes>
+                            {ROUTES.map((route) => (
+                                <Route key={route.path} path={route.path} element={route.element}/>
+                            ))}
+                        </Routes>
                     </Container>
                 </Box>
             </Box>
