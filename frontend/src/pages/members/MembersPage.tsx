@@ -29,6 +29,21 @@ export default function MembersPage() {
             })
     }
 
+    const deleteMember = (member: IMember) => {
+        if (!window.confirm(`Are you sure you want to delete ${member.name}?`)) {
+            return;
+        }
+
+        memberApiService
+            .delete(member.id)
+            .then(() => {
+                setMembers(members.filter((m) => m.id !== member.id));
+            })
+            .catch((err) => {
+                alert(err);
+            })
+    }
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -43,6 +58,7 @@ export default function MembersPage() {
                 <Grid item xs={12} sm={6} md={4} lg={3} key={member.id}>
                     <MemberCard
                         member={member}
+                        onMemberDelete={deleteMember}
                     />
                 </Grid>
             ))}

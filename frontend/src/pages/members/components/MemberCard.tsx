@@ -7,9 +7,10 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export interface MemberCardProps {
     member: IMember
+    onMemberDelete: (member: IMember) => void
 }
 
-export default function MemberCard({ member }: MemberCardProps) {
+export default function MemberCard({ member, onMemberDelete }: MemberCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -23,8 +24,8 @@ export default function MemberCard({ member }: MemberCardProps) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
+        <Button size="small" color="error" onClick={() => onMemberDelete(member)}>
+            Delete
         </Button>
       </CardActions>
     </Card>

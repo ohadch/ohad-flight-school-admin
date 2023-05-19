@@ -113,7 +113,7 @@ export default function App() {
                             noWrap
                             sx={{flexGrow: 1}}
                         >
-                            Dashboard
+                            Gliding Course Management
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
