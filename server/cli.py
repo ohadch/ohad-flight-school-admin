@@ -2,6 +2,10 @@ import logging
 
 import typer
 
+import dotenv
+
+dotenv.load_dotenv()
+
 app = typer.Typer()
 
 
@@ -17,7 +21,7 @@ def create_seed_data():
 
     from src.config.database import SessionLocal
 
-    logger.info("Creating endorsements...")
+    typer.echo("Creating endorsements...")
     db = SessionLocal()
     db.add(Endorsement(name="Before Solo Student"))
     db.add(Endorsement(name="Solo Student"))
