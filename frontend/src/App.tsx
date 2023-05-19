@@ -16,12 +16,21 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import List from '@mui/material/List';
 import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import MembersPage from "./pages/members/MembersPage.tsx";
 
 const DRAWER_WIDTH: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MembersPage />,
+  }
+]);
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -152,7 +161,7 @@ export default function App() {
                 >
                     <Toolbar/>
                     <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
-                        Content goes here
+                        <RouterProvider router={router} />
                     </Container>
                 </Box>
             </Box>

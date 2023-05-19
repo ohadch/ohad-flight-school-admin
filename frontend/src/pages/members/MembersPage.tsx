@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react'
 import {IMember, IMemberCreate} from "../../@types";
 import {memberApiService} from "../../services/api";
+import { Grid } from '@mui/material';
+import MemberCard from './components/MemberCard';
 
 export default function MembersPage() {
     const [members, setMembers] = useState<IMember[]>([]);
@@ -27,47 +29,23 @@ export default function MembersPage() {
             })
     }
 
-    const deleteMember = (member: IMember) => {
-        memberApiService.delete(member.id).then(() => {
-            setMembers(members.filter((m) => m.id !== member.id));
-        });
-    }
-
-    const updateMember = (member: IMember) => {
-        memberApiService.update(member.id, member).then((updatedMember) => {
-            setMembers(
-                members.map((m) => (m.id === updatedMember.id ? updatedMember : m))
-            );
-        });
-    }
-
-
     return (
-        <>
-            <div>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
                 <input
                     type="text"
                     value={newMemberName}
                     onChange={(e) => setNewMemberName(e.target.value)}
                 />
-                <button onClick={addMember}>Add</button>
-            </div>
-            <div>
-                <ul>
-                    {members.map((member) => (
-                        <li key={member.id}>
-                            <input
-                                type="text"
-                                value={member.name}
-                                onChange={(e) =>
-                                    updateMember({...member, name: e.target.value})
-                                }
-                            />
-                            <button onClick={() => deleteMember(member)}>Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
+                <button onClick={addMember}>Add Member</button>
+            </Grid>
+            {members.map((member) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={member.id}>
+                    <MemberCard
+                        member={member}
+                    />
+                </Grid>
+            ))}
+        </Grid>
     )
 }
