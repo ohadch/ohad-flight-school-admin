@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from server.config.db import Base
+from src.config.database import Base
 
 
 class MemberEndorsement(Base):

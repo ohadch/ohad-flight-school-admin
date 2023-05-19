@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from server.config.dependencies import get_db
-from server.models import Endorsement
-from server.schemas.endorsement import EndorsementSchema, EndorsementCreateSchema, EndorsementUpdateSchema
+from src.config.dependencies import get_db
+from src.models import Endorsement
+from src.schemas.endorsement import EndorsementSchema, EndorsementCreateSchema, EndorsementUpdateSchema
 
 router = APIRouter(
     prefix="/endorsements",

@@ -8,7 +8,7 @@ dotenv.load_dotenv(
 )
 from fastapi import FastAPI
 
-from server.routers import members, endorsements
+from src.routers import members, endorsements
 
 app = FastAPI()
 app.add_middleware(

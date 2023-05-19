@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from server.config.dependencies import get_db
-from server.models import Member
-from server.schemas.member import MemberSchema, MemberCreateSchema, MemberUpdateSchema
+from src.config.dependencies import get_db
+from src.models import Member
+from src.schemas.member import MemberSchema, MemberCreateSchema, MemberUpdateSchema
 
 router = APIRouter(
     prefix="/members",

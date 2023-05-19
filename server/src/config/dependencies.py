@@ -1,5 +1,5 @@
 # Dependency
-from server.config.db import SessionLocal
+from src.config.database import SessionLocal
 
 
 def get_db():
