@@ -6,7 +6,7 @@ export class ModelApi<TModel, TModelCreate, TModelUpdate> {
   constructor(private endpoint: string) {}
 
   async get() {
-    const response = await axios.get<TModel[]>(`${API_URL}${this.endpoint}`);
+    const response = await axios.get<TModel[]>(`${API_URL}${this.endpoint}/`);
     return response.data;
   }
 
