@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from src.config.database import Base
@@ -13,3 +13,7 @@ class MemberEndorsement(Base):
 
     member = relationship("Member", back_populates="members_endorsements")
     endorsement = relationship("Endorsement", back_populates="members_endorsements")
+
+    __table_args__ = (
+        UniqueConstraint("member_id", "endorsement_id"),
+    )

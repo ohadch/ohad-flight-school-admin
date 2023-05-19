@@ -1,8 +1,8 @@
 """First migration
 
-Revision ID: 304cc2703d0d
+Revision ID: ac6aa2f95780
 Revises: 
-Create Date: 2023-05-19 16:17:08.393666
+Create Date: 2023-05-19 16:20:01.387818
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '304cc2703d0d'
+revision = 'ac6aa2f95780'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,8 @@ def upgrade() -> None:
     op.create_table('endorsements',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_index(op.f('ix_endorsements_id'), 'endorsements', ['id'], unique=False)
     op.create_table('members',
@@ -36,7 +37,8 @@ def upgrade() -> None:
     sa.Column('endorsement_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['endorsement_id'], ['endorsements.id'], ),
     sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('member_id', 'endorsement_id')
     )
     op.create_index(op.f('ix_members_endorsements_id'), 'members_endorsements', ['id'], unique=False)
     # ### end Alembic commands ###
