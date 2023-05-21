@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IMember } from "../../@types";
+import { IMember, IMemberCreate } from "../../@types";
 import { memberApiService } from "../../services/api";
 import { Button, Grid } from '@mui/material';
 import MemberCard from './components/MemberCard';
@@ -15,11 +15,9 @@ export default function MembersPage() {
         });
     }, []);
 
-    const addMember = (name: string) => {
+    const addMember = (data: IMemberCreate) => {
         memberApiService
-            .create({
-                name,
-            })
+            .create(data)
             .then((member) => {
                 setMembers([...members, member]);
             })
