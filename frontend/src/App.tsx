@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
+import AttributionIcon from '@mui/icons-material/Attribution';
 import List from '@mui/material/List';
 import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {Route, Routes, useLocation} from "react-router-dom";
@@ -32,12 +33,6 @@ const ROUTES = [
     element: <MembersPage />,
     icon: <PersonIcon />,
     name: "Members",
-  },
-  {
-    path: "/endorsements",
-    element: <EndorsementsPage />,
-    icon: <PersonIcon />,
-    name: "Endorsements",
   }
 ]
 

@@ -8,7 +8,7 @@ dotenv.load_dotenv(
 )
 from fastapi import FastAPI
 
-from src.routers import members, endorsements
+from src.routers import members
 
 app = FastAPI()
 app.add_middleware(
@@ -31,4 +31,3 @@ async def health():
 
 
 app.include_router(members.router)
-app.include_router(endorsements.router)
