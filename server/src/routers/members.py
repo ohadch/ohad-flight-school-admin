@@ -24,7 +24,7 @@ async def read_member(member_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=MemberSchema)
 async def create_member(member_schema: MemberCreateSchema, db: Session = Depends(get_db)):
-    member = Member(name=member_schema.name)
+    member = Member(**member_schema.__dict__)
     db.add(member)
     db.commit()
     db.refresh(member)

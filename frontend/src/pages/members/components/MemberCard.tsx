@@ -1,5 +1,5 @@
 import { IMember } from '../../../@types';
-import { Card } from '@mui/material';
+import { Card, Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
@@ -11,6 +11,13 @@ export interface MemberCardProps {
 }
 
 export default function MemberCard({ member, onMemberDelete }: MemberCardProps) {
+    const qualifications = {
+        "Before Solo Student": member.is_before_solo_student,
+        "Solo Student": member.is_solo_student,
+        "Private Pilot": member.is_private_pilot,
+        "CFI": member.is_cfi,
+    }
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -19,7 +26,11 @@ export default function MemberCard({ member, onMemberDelete }: MemberCardProps) 
             {member.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Some quick example text to build on the card title and make up the bulk of
+            {Object.entries(qualifications).map(([name, value]) => {
+                if (value) {
+                    return <Chip label={name} />
+                }
+            })}
           </Typography>
         </CardContent>
       </CardActionArea>

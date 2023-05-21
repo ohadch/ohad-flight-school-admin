@@ -4,3 +4,4 @@ node_modules/
 data.db
 .env
 db.sqlite3
+*.pyc
