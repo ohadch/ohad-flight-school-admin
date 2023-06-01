@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, Integer, ForeignKey, DateTime, UniqueConstraint, String
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, UniqueConstraint, Enum
 from sqlalchemy.orm import relationship
 
 from src.config.database import Base
@@ -22,7 +22,7 @@ class MemberDocument(Base):
     id = Column(Integer, primary_key=True, index=True)
     member_id = Column(Integer, ForeignKey("members.id"))
     type = Column(
-        String,
+        Enum(MemberDocumentType),
         nullable=False,
     )
     expiration_at = Column(DateTime, nullable=True)
