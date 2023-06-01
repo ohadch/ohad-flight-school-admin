@@ -1,6 +1,17 @@
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, FormControlLabel, Checkbox, FormGroup } from "@mui/material";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    TextField,
+    DialogActions,
+    Button,
+    FormGroup,
+    FormControl, MenuItem, Select, InputLabel
+} from "@mui/material";
 import React from "react";
-import { IMemberCreate } from "../../@types";
+import {IMemberCreate, MemberStatus} from "../../@types";
+import {getDisplayNameByMemberStatus} from "../../utils/members.ts";
 
 export interface CreateMemberDialogProps {
     open: boolean
@@ -8,80 +19,44 @@ export interface CreateMemberDialogProps {
     onMemberCreate: (data: IMemberCreate) => void
 }
 
-export default function CreateMemberDialog({ open, onClose, onMemberCreate }: CreateMemberDialogProps) {
+export default function CreateMemberDialog({open, onClose, onMemberCreate}: CreateMemberDialogProps) {
     const [newMemberName, setNewMemberName] = React.useState<string>("");
-    const [memberQualifications, setMemberQualifications] = React.useState({
-        isBeforeSoloStudent: true,
-        isSoloStudent: false,
-        isPrivatePilot: false,
-        isCfi: false,
-    });
+    const [memberStatus, setMemberStatus] = React.useState<MemberStatus>(MemberStatus.BEFORE_SOLO_STUDENT);
 
     return (
         <Dialog open={open}>
             <DialogTitle>Create Member</DialogTitle>
             <DialogContent>
-                <DialogContentText>
-                    Enter the name of the new member.
-                </DialogContentText>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Name"
-                    type="text"
-                    fullWidth
-                    value={newMemberName}
-                    onChange={(e) => setNewMemberName(e.target.value)}
-                />
-                <DialogContentText>
-                    Select the qualifications of the new member.
-                </DialogContentText>
                 <FormGroup>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={memberQualifications.isBeforeSoloStudent}
-                                onChange={(e) => setMemberQualifications({ ...memberQualifications, isBeforeSoloStudent: e.target.checked })}
-                                name="isBeforeSoloStudent"
-                                color="primary"
-                            />
-                        }
-                        label="Before Solo Student"
+                    <DialogContentText>
+                        Enter the name of the new member.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Name"
+                        type="text"
+                        fullWidth
+                        value={newMemberName}
+                        onChange={(e) => setNewMemberName(e.target.value)}
                     />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={memberQualifications.isSoloStudent}
-                                onChange={(e) => setMemberQualifications({ ...memberQualifications, isSoloStudent: e.target.checked })}
-                                name="isSoloStudent"
-                                color="primary"
-                            />
-                        }
-                        label="Solo Student"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={memberQualifications.isPrivatePilot}
-                                onChange={(e) => setMemberQualifications({ ...memberQualifications, isPrivatePilot: e.target.checked })}
-                                name="isPrivatePilot"
-                                color="primary"
-                            />
-                        }
-                        label="Private Pilot"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={memberQualifications.isCfi}
-                                onChange={(e) => setMemberQualifications({ ...memberQualifications, isCfi: e.target.checked })}
-                                name="isCfi"
-                                color="primary"
-                            />
-                        }
-                        label="CFI"
-                    />
+                </FormGroup>
+                <FormGroup>
+                    <FormControl>
+                        <InputLabel id="member-status-label">Member Status</InputLabel>
+                        <Select
+                            labelId="member-status-label"
+                            id="member-status"
+                            value={memberStatus}
+                            label="Member Status"
+                            onChange={(e) => setMemberStatus(e.target.value as MemberStatus)}
+                        >
+                            {Object.values(MemberStatus).map((status) => (
+                                <MenuItem key={status} value={status}>{getDisplayNameByMemberStatus(status)}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </FormGroup>
             </DialogContent>
             <DialogActions>
@@ -90,10 +65,7 @@ export default function CreateMemberDialog({ open, onClose, onMemberCreate }: Cr
                     () => {
                         onMemberCreate({
                             name: newMemberName,
-                            is_before_solo_student: memberQualifications.isBeforeSoloStudent,
-                            is_solo_student: memberQualifications.isSoloStudent,
-                            is_private_pilot: memberQualifications.isPrivatePilot,
-                            is_cfi: memberQualifications.isCfi,
+                            status: memberStatus
                         });
                         setNewMemberName("");
                         onClose();

@@ -1,7 +1,16 @@
-from sqlalchemy import Column, Integer, String, Boolean
+import enum
+
+from sqlalchemy import Column, Integer, String, Boolean, Enum
 from sqlalchemy.orm import relationship
 
 from src.config.database import Base
+
+
+class MemberStatus(enum.Enum):
+    BEFORE_SOLO_STUDENT = "before_solo_student"
+    SOLO_STUDENT = "solo_student"
+    PRIVATE_PILOT = "private_pilot"
+    CFI = "cfi"
 
 
 class Member(Base):
@@ -10,8 +19,7 @@ class Member(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
-
-    is_before_solo_student = Column(Boolean, default=False)
-    is_solo_student = Column(Boolean, default=False)
-    is_private_pilot = Column(Boolean, default=False)
-    is_cfi = Column(Boolean, default=False)
+    status = Column(
+        Enum(MemberStatus),
+        nullable=False,
+    )

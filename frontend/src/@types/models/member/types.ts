@@ -1,24 +1,17 @@
+import {MemberStatus} from "./enums.ts";
+
 export interface IMember {
     id: number;
     name: string;
-    is_before_solo_student: boolean;
-    is_solo_student: boolean;
-    is_private_pilot: boolean;
-    is_cfi: boolean;
+    status: MemberStatus;
 }
 
 export interface IMemberCreate {
     name: string;
-    is_before_solo_student: boolean;
-    is_solo_student: boolean;
-    is_private_pilot: boolean;
-    is_cfi: boolean;
+    status: MemberStatus;
 }
 
 export interface IMemberUpdate {
     name: string;
-    is_before_solo_student: boolean;
-    is_solo_student: boolean;
-    is_private_pilot: boolean;
-    is_cfi: boolean;
+    status: MemberStatus;
 }

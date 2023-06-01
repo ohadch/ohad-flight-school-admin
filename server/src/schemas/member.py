@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+from src.models.member import MemberStatus
 
 MIN_LENGTH_NAME = 3
 
@@ -7,10 +8,7 @@ MIN_LENGTH_NAME = 3
 class MemberSchema(BaseModel):
     id: int
     name: str = Field(..., min_length=MIN_LENGTH_NAME)
-    is_before_solo_student: bool
-    is_solo_student: bool
-    is_private_pilot: bool
-    is_cfi: bool
+    status: MemberStatus
 
     class Config:
         orm_mode = True
@@ -18,15 +16,9 @@ class MemberSchema(BaseModel):
 
 class MemberCreateSchema(BaseModel):
     name: str = Field(..., min_length=MIN_LENGTH_NAME)
-    is_before_solo_student: bool
-    is_solo_student: bool
-    is_private_pilot: bool
-    is_cfi: bool
+    status: MemberStatus
 
 
 class MemberUpdateSchema(BaseModel):
     name: str = Field(..., min_length=MIN_LENGTH_NAME)
-    is_before_solo_student: bool
-    is_solo_student: bool
-    is_private_pilot: bool
-    is_cfi: bool
+    status: MemberStatus

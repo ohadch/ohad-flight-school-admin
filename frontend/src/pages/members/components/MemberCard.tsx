@@ -3,6 +3,7 @@ import { Card, Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import {getDisplayNameByMemberStatus} from "../../../utils/members.ts";
 
 
 export interface MemberCardProps {
@@ -10,14 +11,8 @@ export interface MemberCardProps {
     onMemberDelete: (member: IMember) => void
 }
 
-export default function MemberCard({ member, onMemberDelete }: MemberCardProps) {
-    const qualifications = {
-        "Before Solo Student": member.is_before_solo_student,
-        "Solo Student": member.is_solo_student,
-        "Private Pilot": member.is_private_pilot,
-        "CFI": member.is_cfi,
-    }
 
+export default function MemberCard({ member, onMemberDelete }: MemberCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -26,11 +21,7 @@ export default function MemberCard({ member, onMemberDelete }: MemberCardProps) 
             {member.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {Object.entries(qualifications).map(([name, value]) => {
-                if (value) {
-                    return <Chip label={name} />
-                }
-            })}
+            <Chip label={getDisplayNameByMemberStatus(member.status)} />
           </Typography>
         </CardContent>
       </CardActionArea>
