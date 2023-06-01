@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from src.config.dependencies import get_db
-from src.models import Member
+from src.models import Member, MemberDocument
 from src.schemas.member_document import MemberDocumentSchema, MemberDocumentCreateSchema, MemberDocumentUpdateSchema
 
 router = APIRouter(
@@ -26,8 +26,10 @@ async def read_member_document(member_id: int, document_id: int, db: Session = D
 
 @router.post("/", response_model=MemberDocumentSchema)
 async def create_member_document(member_id: int, member_document_schema: MemberDocumentCreateSchema, db: Session = Depends(get_db)):
-    member = db.query(Member).get(member_id)
-    member_document = member.documents.create(**member_document_schema.__dict__)
+    member_document = MemberDocument()
+    member_document.member_id = member_id
+    for key, value in member_document_schema.__dict__.items():
+        setattr(member_document, key, value)
     db.add(member_document)
     db.commit()
     db.refresh(member_document)
