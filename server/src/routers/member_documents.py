@@ -44,3 +44,10 @@ async def update_member_document(member_id: int, document_id: int, member_docume
     db.commit()
     db.refresh(member_document)
     return member_document
+
+
+@router.delete("/{document_id}")
+async def delete_member_document(member_id: int, document_id: int, db: Session = Depends(get_db)):
+    db.query(MemberDocument).filter(MemberDocument.id == document_id).delete()
+    db.commit()
+    return {"message": "Member document deleted successfully."}
