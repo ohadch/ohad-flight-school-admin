@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, Integer, String, Boolean, Enum
+from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.orm import relationship
 
 from src.config.database import Base
@@ -23,3 +23,5 @@ class Member(Base):
         Enum(MemberStatus),
         nullable=False,
     )
+
+    documents = relationship("MemberDocument", back_populates="member")

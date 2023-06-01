@@ -1,0 +1,44 @@
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from src.config.dependencies import get_db
+from src.models import Member
+from src.schemas.member_document import MemberDocumentSchema, MemberDocumentCreateSchema, MemberDocumentUpdateSchema
+
+router = APIRouter(
+    prefix="/members/{member_id}/documents",
+    tags=["members"],
+    responses={404: {"description": "Not found"}},
+)
+
+
+@router.get("/", response_model=list[MemberDocumentSchema])
+async def read_member_documents(member_id: int, db: Session = Depends(get_db)):
+    member = db.query(Member).get(member_id)
+    return member.documents
+
+
+@router.get("/{document_id}", response_model=MemberDocumentSchema)
+async def read_member_document(member_id: int, document_id: int, db: Session = Depends(get_db)):
+    member = db.query(Member).get(member_id)
+    return member.documents.get(document_id)
+
+
+@router.post("/", response_model=MemberDocumentSchema)
+async def create_member_document(member_id: int, member_document_schema: MemberDocumentCreateSchema, db: Session = Depends(get_db)):
+    member = db.query(Member).get(member_id)
+    member_document = member.documents.create(**member_document_schema.__dict__)
+    db.add(member_document)
+    db.commit()
+    db.refresh(member_document)
+    return member_document
+
+
+@router.put("/{document_id}", response_model=MemberDocumentSchema)
+async def update_member_document(member_id: int, document_id: int, member_document_schema: MemberDocumentUpdateSchema, db: Session = Depends(get_db)):
+    member = db.query(Member).get(member_id)
+    member_document = member.documents.get(document_id)
+    member_document.update(**member_document_schema.__dict__)
+    db.commit()
+    db.refresh(member_document)
+    return member_document
