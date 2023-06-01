@@ -14,26 +14,29 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
-import AttributionIcon from '@mui/icons-material/Attribution';
 import List from '@mui/material/List';
 import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {Route, Routes, useLocation} from "react-router-dom";
 import MembersPage from "./pages/members/MembersPage.tsx";
-import EndorsementsPage from './pages/endorsements/EndorsementsPage.tsx';
+import MemberPage from "./pages/member/MemberPage.tsx";
 
-const DRAWER_WIDTH: number = 240;
+const DRAWER_WIDTH = 240;
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
 
 const ROUTES = [
-  {
-    path: "/members",
-    element: <MembersPage />,
-    icon: <PersonIcon />,
-    name: "Members",
-  }
+    {
+        path: "/members",
+        element: <MembersPage/>,
+        icon: <PersonIcon/>,
+        name: "Members",
+    },
+    {
+        path: "/members/:id",
+        element: <MemberPage/>,
+    }
 ]
 
 
@@ -144,12 +147,14 @@ export default function App() {
                     <Divider/>
                     <List component="nav">
                         <React.Fragment>
-                            {ROUTES.map((route) => (
-                                <ListItemButton 
-                                key={route.path}
-                                component="a"
-                                href={route.path}
-                                selected={pathname === route.path}
+                            {ROUTES
+                                .filter((route) => route.icon)
+                                .map((route) => (
+                                <ListItemButton
+                                    key={route.path}
+                                    component="a"
+                                    href={route.path}
+                                    selected={pathname === route.path}
                                 >
                                     <ListItemIcon>
                                         {route.icon}
