@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class InstructionPlanSchema(BaseModel):
+class SyllabusSchema(BaseModel):
     id: int
     name: str
 
@@ -9,9 +9,9 @@ class InstructionPlanSchema(BaseModel):
         orm_mode = True
 
 
-class InstructionPlanCreateSchema(BaseModel):
+class SyllabusCreateSchema(BaseModel):
     name: str
 
 
-class InstructionPlanUpdateSchema(BaseModel):
+class SyllabusUpdateSchema(BaseModel):
     name: str
