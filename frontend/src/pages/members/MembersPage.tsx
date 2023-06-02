@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { IMember, IMemberCreate } from "../../@types";
 import { memberApiService } from "../../services/api";
 import { Button, Grid } from '@mui/material';
-import MemberCard from './components/MemberCard';
 import CreateMemberDialog from '../../components/members/CreateMemberDialog';
+import MembersTable from "./components/MembersTable.tsx";
 
 export default function MembersPage() {
     const [members, setMembers] = useState<IMember[]>([]);
@@ -62,14 +62,9 @@ export default function MembersPage() {
                         </Grid>
                     </Grid>
                 </Grid>
-                {members.map((member) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={member.id}>
-                        <MemberCard
-                            member={member}
-                            onMemberDelete={deleteMember}
-                        />
-                    </Grid>
-                ))}
+                <Grid item xs={12}>
+                    <MembersTable members={members} onDeleteMember={deleteMember} />
+                </Grid>
             </Grid>
         </>
     )
