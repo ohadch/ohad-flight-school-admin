@@ -2,7 +2,6 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogContentText,
     TextField,
     DialogActions,
     Button,
@@ -26,21 +25,27 @@ export default function CreateMemberDialog({open, onClose, onMemberCreate}: Crea
     return (
         <Dialog open={open}>
             <DialogTitle>Create Member</DialogTitle>
-            <DialogContent>
+            <DialogContent
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    width: 400,
+                }}
+            >
                 <FormGroup>
-                    <DialogContentText>
-                        Enter the name of the new member.
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Name"
-                        type="text"
-                        fullWidth
-                        value={newMemberName}
-                        onChange={(e) => setNewMemberName(e.target.value)}
-                    />
+                    <FormControl>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            value={newMemberName}
+                            onChange={(e) => setNewMemberName(e.target.value)}
+                        />
+                    </FormControl>
                 </FormGroup>
                 <FormGroup>
                     <FormControl>
