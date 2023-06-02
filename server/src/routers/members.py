@@ -34,7 +34,8 @@ async def create_member(member_schema: MemberCreateSchema, db: Session = Depends
 @router.put("/{member_id}", response_model=MemberSchema)
 async def update_member(member_id: int, member_schema: MemberUpdateSchema, db: Session = Depends(get_db)):
     member = db.query(Member).get(member_id)
-    member.name = member_schema.name
+    for key, value in member_schema.__dict__.items():
+        setattr(member, key, value)
     db.commit()
     db.refresh(member)
     return member
