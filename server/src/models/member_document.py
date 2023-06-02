@@ -17,7 +17,7 @@ class MemberDocument(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     member_id = Column(Integer, ForeignKey("members.id"))
-
+    type_id = Column(Integer, ForeignKey("document_types.id"))
     status = Column(
         Enum(MemberDocumentStatus),
         nullable=False,
@@ -26,5 +26,5 @@ class MemberDocument(Base):
     expiration_at = Column(DateTime, nullable=True)
 
     member = relationship("Member", back_populates="documents")
-    type = relationship("DocumentType", back_populates="members")
+    type = relationship("DocumentType")
 

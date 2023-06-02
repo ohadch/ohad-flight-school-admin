@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IMember, IMemberCreate } from "../../@types";
-import { memberApiService } from "../../services/api";
+import { membersApiService } from "../../services/api";
 import { Button, Grid } from '@mui/material';
 import CreateMemberDialog from '../../components/members/CreateMemberDialog';
 import MembersTable from "../../components/members/MembersTable.tsx";
@@ -12,13 +12,13 @@ export default function MembersPage() {
     const [currentlyEditedMember, setCurrentlyEditedMember] = useState<IMember | null>(null);
 
     useEffect(() => {
-        memberApiService.get().then((members) => {
+        membersApiService.get().then((members) => {
             setMembers(members);
         });
     }, []);
 
     const addMember = (data: IMemberCreate) => {
-        memberApiService
+        membersApiService
             .create(data)
             .then((member) => {
                 setMembers([...members, member]);
@@ -29,7 +29,7 @@ export default function MembersPage() {
     }
 
     const editMember = (member: IMember) => {
-        memberApiService
+        membersApiService
             .update(member.id, {
                 name: member.name,
                 status: member.status,
@@ -48,7 +48,7 @@ export default function MembersPage() {
             return;
         }
 
-        memberApiService
+        membersApiService
             .delete(member.id)
             .then(() => {
                 setMembers(members.filter((m) => m.id !== member.id));

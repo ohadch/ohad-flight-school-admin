@@ -1,12 +1,11 @@
-import {IMemberDocument, IMemberDocumentCreate} from "../../@types/models/MemberDocument";
 import {Grid} from "@mui/material";
 import CreateMemberDocumentDialog from "./CreateMemberDocumentDialog.tsx";
 import {useEffect, useState} from "react";
-import {IMember} from "../../@types";
+import {IDocumentType, IMemberDocument, IMemberDocumentCreate, IMember} from "../../@types";
 import {MemberDocumentsApiService} from "../../services/api/memberDocumentsApi.service.ts";
-import {getDisplayNameByMemberDocumentType} from "../../utils/memberDocuments.ts";
 import MemberDocumentsTable from "./MemberDocumentsTable.tsx";
 import EditMemberDocumentDialog from "./EditMemberDocumentDialog.tsx";
+import {documentTypesApiService} from "../../services/api/documentTypesApi.service.ts";
 
 export interface MemberDocumentsProps {
     member: IMember;
@@ -14,6 +13,7 @@ export interface MemberDocumentsProps {
 
 export default function MemberDocumentsContainer({member}: MemberDocumentsProps) {
     const [documents, setDocuments] = useState<IMemberDocument[] | null>(null);
+    const [documentTypes, setDocumentTypes] = useState<IDocumentType[] | null>(null);
     const [createMemberDocumentDialogOpen, setCreateMemberDocumentDialogOpen] = useState<boolean>(false);
     const [currentlyEditedMemberDocument, setCurrentlyEditedMemberDocument] = useState<IMemberDocument | null>(null);
     const memberDocumentsApiService = new MemberDocumentsApiService(member.id);
@@ -22,6 +22,12 @@ export default function MemberDocumentsContainer({member}: MemberDocumentsProps)
         if (!documents) {
             memberDocumentsApiService.get().then((documents) => {
                 setDocuments(documents);
+            });
+        }
+
+        if (!documentTypes) {
+            documentTypesApiService.get().then((documentTypes) => {
+                setDocumentTypes(documentTypes);
             });
         }
     })
@@ -40,7 +46,7 @@ export default function MemberDocumentsContainer({member}: MemberDocumentsProps)
     const updateMemberDocument = (data: IMemberDocument) => {
         memberDocumentsApiService
             .update(data.id, {
-                type: data.type,
+                type_id: data.type_id,
                 status: data.status,
                 expiration_at: data.expiration_at,
             })
@@ -59,7 +65,7 @@ export default function MemberDocumentsContainer({member}: MemberDocumentsProps)
     }
 
     const deleteMemberDocument = (document: IMemberDocument) => {
-        const documentDisplayName = getDisplayNameByMemberDocumentType(document.type);
+        const documentDisplayName = documentTypes?.find((dt) => dt.id === document.type_id)?.name || "Unknown";
 
         if (!window.confirm(`Are you sure you want to delete ${member.name}'s ${documentDisplayName} document?`)) {
             return;
@@ -93,6 +99,7 @@ export default function MemberDocumentsContainer({member}: MemberDocumentsProps)
             <Grid container spacing={2}>
                 <MemberDocumentsTable
                     documents={documents || []}
+                    documentTypes={documentTypes}
                     onMemberDocumentCreate={() => setCreateMemberDocumentDialogOpen(true)}
                     onMemberDocumentEdit={(document) => setCurrentlyEditedMemberDocument(document)}
                     onMemberDocumentDelete={deleteMemberDocument}

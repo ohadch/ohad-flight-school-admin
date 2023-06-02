@@ -8,9 +8,9 @@ import {
     FormGroup,
     FormControl, MenuItem, Select, InputLabel
 } from "@mui/material";
-import React from "react";
-import {getDisplayNameByMemberDocumentType} from "../../utils/memberDocuments.ts";
-import {IMemberDocumentCreate, MemberDocumentStatus, MemberDocumentType} from "../../@types/models/MemberDocument";
+import React, {useEffect} from "react";
+import {IDocumentType, IMemberDocumentCreate, MemberDocumentStatus} from "../../@types";
+import {documentTypesApiService} from "../../services/api/documentTypesApi.service.ts";
 
 export interface CreateMemberDocumentDialogProps {
     open: boolean
@@ -18,10 +18,31 @@ export interface CreateMemberDocumentDialogProps {
     onMemberDocumentCreate: (data: IMemberDocumentCreate) => void
 }
 
-export default function CreateMemberDocumentDialog({open, onClose, onMemberDocumentCreate}: CreateMemberDocumentDialogProps) {
-    const [memberDocumentType, setMemberDocumentType] = React.useState<MemberDocumentType>(MemberDocumentType.MEDICAL);
+export default function CreateMemberDocumentDialog(props: CreateMemberDocumentDialogProps) {
+    const {
+        open,
+        onClose,
+        onMemberDocumentCreate
+    } = props;
+
+    const [documentType, setDocumentType] = React.useState<IDocumentType | null>(null);
     const [expirationAt, setExpirationAt] = React.useState<Date>(new Date());
     const [documentStatus, setDocumentStatus] = React.useState<MemberDocumentStatus>(MemberDocumentStatus.PENDING);
+    const [allDocumentTypes, setAllDocumentTypes] = React.useState<IDocumentType[] | null>(null);
+
+    useEffect(() => {
+        if (allDocumentTypes) {
+            return;
+        }
+        documentTypesApiService.get()
+            .then((documentTypes) => {
+                console.log({documentTypes})
+                setAllDocumentTypes(documentTypes);
+            })
+            .catch((err) => {
+                alert(err);
+            })
+    })
 
     return (
         <Dialog open={open}>
@@ -42,14 +63,19 @@ export default function CreateMemberDocumentDialog({open, onClose, onMemberDocum
                     <FormControl>
                         <InputLabel id="member-document-type-label">Document Type</InputLabel>
                         <Select
-                            labelId="member-document-type-label"
-                            id="member-document-type"
-                            value={memberDocumentType}
+                            labelId="document-type-label"
+                            id="document-type"
+                            value={documentType?.id || ""}
                             label="Document Type"
-                            onChange={(e) => setMemberDocumentType(e.target.value as MemberDocumentType)}
+                            onChange={(e) => {
+                                const documentTypeId = e.target.value as number;
+                                const documentType = (allDocumentTypes || [])
+                                    .find((documentType) => documentType.id === documentTypeId);
+                                setDocumentType(documentType || null);
+                            }}
                         >
-                            {Object.values(MemberDocumentType).map((type) => (
-                                <MenuItem key={type} value={type}>{getDisplayNameByMemberDocumentType(type)}</MenuItem>
+                            {allDocumentTypes && allDocumentTypes.map((documentType) => (
+                                <MenuItem key={documentType.id} value={documentType.id}>{documentType.name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -84,16 +110,22 @@ export default function CreateMemberDocumentDialog({open, onClose, onMemberDocum
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={
-                    () => {
-                        onMemberDocumentCreate({
-                            type: memberDocumentType,
-                            expiration_at: expirationAt.toISOString(),
-                            status: documentStatus,
-                        });
-                        onClose();
-                    }
-                }>Create</Button>
+                <Button
+                    disabled={!documentType}
+                    onClick={
+                        () => {
+                            if (!documentType) {
+                                return;
+                            }
+
+                            onMemberDocumentCreate({
+                                type_id: documentType.id,
+                                expiration_at: expirationAt.toISOString(),
+                                status: documentStatus,
+                            });
+                            onClose();
+                        }
+                    }>Create</Button>
             </DialogActions>
         </Dialog>
     )

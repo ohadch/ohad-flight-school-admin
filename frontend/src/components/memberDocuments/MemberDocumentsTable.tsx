@@ -1,10 +1,11 @@
-import {IMemberDocument} from "../../@types/models/MemberDocument";
+import {IDocumentType, IMemberDocument} from "../../@types";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
 export interface MemberDocumentsTableProps {
     documents: IMemberDocument[];
+    documentTypes: IDocumentType[];
     onMemberDocumentCreate: () => void;
     onMemberDocumentEdit: (document: IMemberDocument) => void;
     onMemberDocumentDelete: (document: IMemberDocument) => void;
@@ -13,6 +14,7 @@ export interface MemberDocumentsTableProps {
 export default function MemberDocumentsTable(props: MemberDocumentsTableProps) {
     const {
         documents,
+        documentTypes,
         onMemberDocumentCreate,
         onMemberDocumentEdit,
         onMemberDocumentDelete,
@@ -52,7 +54,11 @@ export default function MemberDocumentsTable(props: MemberDocumentsTableProps) {
                                     <TableCell component="th" scope="row">
                                         {document.id}
                                     </TableCell>
-                                    <TableCell>{document.type}</TableCell>
+                                    <TableCell>
+                                        {
+                                            documentTypes?.find(dt => dt.id === document.type_id)?.name || "Unknown"
+                                        }
+                                    </TableCell>
                                     <TableCell>{document.status}</TableCell>
                                     <TableCell>{document.expiration_at}</TableCell>
                                     <TableCell>

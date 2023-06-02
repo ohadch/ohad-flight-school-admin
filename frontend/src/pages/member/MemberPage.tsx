@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {IMember} from "../../@types";
 import {useEffect, useState} from "react";
-import {memberApiService} from "../../services/api";
+import {membersApiService} from "../../services/api";
 import MemberDocumentsContainer from "../../components/memberDocuments/MemberDocumentsContainer.tsx";
 
 export default function MemberPage() {
@@ -11,7 +11,7 @@ export default function MemberPage() {
 
     useEffect(() => {
         if (!member) {
-            memberApiService.getById(memberId).then((member) => {
+            membersApiService.getById(memberId).then((member) => {
                 setMember(member);
             });
         }

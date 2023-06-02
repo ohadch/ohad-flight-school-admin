@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class CourseSchema(BaseModel):
+class DocumentTypeSchema(BaseModel):
     id: int
     name: str
 
@@ -9,9 +9,9 @@ class CourseSchema(BaseModel):
         orm_mode = True
 
 
-class CourseCreateSchema(BaseModel):
+class DocumentTypeCreateSchema(BaseModel):
     name: str
 
 
-class CourseUpdateSchema(BaseModel):
+class DocumentTypeUpdateSchema(BaseModel):
     name: str

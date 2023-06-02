@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from src.config.dependencies import get_db
 from src.models import Course, InstructionPlanSyllabus
-from src.schemas.course import InstructionPlanSchema, InstructionPlanCreateSchema, InstructionPlanUpdateSchema
+from src.schemas.course import CourseSchema, CourseCreateSchema, CourseUpdateSchema
 from src.schemas.course_syllabus import InstructionPlanSyllabusSchema
 from src.schemas.syllabus import SyllabusSchema
 
@@ -14,12 +14,12 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=list[InstructionPlanSchema])
+@router.get("/", response_model=list[CourseSchema])
 async def read_courses(db: Session = Depends(get_db)):
     return db.query(Course).all()
 
 
-@router.get("/{course_id}", response_model=InstructionPlanSchema)
+@router.get("/{course_id}", response_model=CourseSchema)
 async def read_course(course_id: int, db: Session = Depends(get_db)):
     return db.query(Course).get(course_id)
 
@@ -59,8 +59,8 @@ async def remove_syllabus_from_course(course_id: int, syllabus_id: int, db: Sess
     return {"message": "Syllabus removed from instruction plan successfully."}
 
 
-@router.post("/", response_model=InstructionPlanSchema)
-async def create_course(course_schema: InstructionPlanCreateSchema, db: Session = Depends(get_db)):
+@router.post("/", response_model=CourseSchema)
+async def create_course(course_schema: CourseCreateSchema, db: Session = Depends(get_db)):
     course = Course(**course_schema.__dict__)
     db.add(course)
     db.commit()
@@ -68,8 +68,8 @@ async def create_course(course_schema: InstructionPlanCreateSchema, db: Session 
     return course
 
 
-@router.put("/{course_id}", response_model=InstructionPlanSchema)
-async def update_course(course_id: int, course_schema: InstructionPlanUpdateSchema, db: Session = Depends(get_db)):
+@router.put("/{course_id}", response_model=CourseSchema)
+async def update_course(course_id: int, course_schema: CourseUpdateSchema, db: Session = Depends(get_db)):
     course = db.query(Course).get(course_id)
     for key, value in course_schema.__dict__.items():
         setattr(course, key, value)

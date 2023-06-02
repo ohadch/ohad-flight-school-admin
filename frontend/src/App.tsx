@@ -23,6 +23,8 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 import CoursesPage from "./pages/courses/CoursesPage.tsx";
 import SyllabusesPage from "./pages/syllabuses/SyllabusesPage.tsx";
 import CoursePage from "./pages/course/CoursePage.tsx";
+import BadgeIcon from '@mui/icons-material/Badge';
+import DocumentTypesPage from "./pages/documentTypes/DocumentTypesPage.tsx";
 
 const DRAWER_WIDTH = 240;
 
@@ -56,6 +58,12 @@ const ROUTES = [
         path: "/syllabuses",
         icon: <TableRowsIcon />,
         element: <SyllabusesPage />
+    },
+    {
+        name: "Document Types",
+        path: "/document-types",
+        icon: <BadgeIcon />,
+        element: <DocumentTypesPage />
     }
 ]
 

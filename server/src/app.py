@@ -8,7 +8,7 @@ dotenv.load_dotenv(
 )
 from fastapi import FastAPI
 
-from src.routers import members, member_documents, courses, syllabuses
+from src.routers import members, member_documents, courses, syllabuses, document_types
 
 app = FastAPI()
 app.add_middleware(
@@ -34,3 +34,4 @@ app.include_router(members.router)
 app.include_router(member_documents.router)
 app.include_router(courses.router)
 app.include_router(syllabuses.router)
+app.include_router(document_types.router)

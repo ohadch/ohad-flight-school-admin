@@ -9,12 +9,12 @@ import {
     FormControl, MenuItem, Select, InputLabel
 } from "@mui/material";
 import React from "react";
-import {getDisplayNameByMemberDocumentType} from "../../utils/memberDocuments.ts";
 import {
     IMemberDocument,
     MemberDocumentStatus,
-    MemberDocumentType
-} from "../../@types/models/MemberDocument";
+    IDocumentType
+} from "../../@types";
+import {documentTypesApiService} from "../../services/api/documentTypesApi.service.ts";
 
 export interface EditMemberDocumentDialogProps {
     open: boolean
@@ -27,10 +27,24 @@ export default function EditMemberDocumentDialog({open, onClose, memberDocument,
     const [editedMemberDocument, setEditedMemberDocument] = React.useState<IMemberDocument>({
         ...memberDocument
     })
+    const [allDocumentTypes, setAllDocumentTypes] = React.useState<IDocumentType[] | null>(null);
+
+    React.useEffect(() => {
+        if (allDocumentTypes) {
+            return;
+        }
+        documentTypesApiService.get()
+            .then((documentTypes) => {
+                setAllDocumentTypes(documentTypes);
+            })
+            .catch((err) => {
+                alert(err);
+            })
+    })
 
     return (
         <Dialog open={open}>
-            <DialogTitle>Create Member Document</DialogTitle>
+            <DialogTitle>Edit Member Document</DialogTitle>
             <DialogContent
                 sx={{
                     display: "flex",
@@ -47,17 +61,19 @@ export default function EditMemberDocumentDialog({open, onClose, memberDocument,
                     <FormControl>
                         <InputLabel id="member-document-type-label">Document Type</InputLabel>
                         <Select
-                            labelId="member-document-type-label"
-                            id="member-document-type"
-                            value={editedMemberDocument.type}
+                            labelId="document-type-label"
+                            id="document-type"
+                            value={editedMemberDocument.type_id}
                             label="Document Type"
                             onChange={(e) => setEditedMemberDocument({
                                 ...editedMemberDocument,
-                                type: e.target.value as MemberDocumentType
+                                type_id: e.target.value as number
                             })}
                         >
-                            {Object.values(MemberDocumentType).map((type) => (
-                                <MenuItem key={type} value={type}>{getDisplayNameByMemberDocumentType(type)}</MenuItem>
+                            {(allDocumentTypes || []).map((documentType) => (
+                                <MenuItem key={documentType.id} value={documentType.id}>
+                                    {documentType.name}
+                                </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
