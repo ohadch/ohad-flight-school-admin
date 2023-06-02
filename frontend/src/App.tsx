@@ -19,7 +19,9 @@ import MembersPage from "./pages/members/MembersPage.tsx";
 import MemberPage from "./pages/member/MemberPage.tsx";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import TableViewIcon from '@mui/icons-material/TableView';
+import TableRowsIcon from '@mui/icons-material/TableRows';
 import InstructionPlansPage from "./pages/instructionPlans/InstructionPlansPage.tsx";
+import SyllabusesPage from "./pages/syllabuses/SyllabusesPage.tsx";
 
 const DRAWER_WIDTH = 240;
 
@@ -29,10 +31,10 @@ interface AppBarProps extends MuiAppBarProps {
 
 const ROUTES = [
     {
-        path: "/members",
-        element: <MembersPage/>,
-        icon: <PersonIcon/>,
         name: "Members",
+        path: "/members",
+        icon: <PersonIcon/>,
+        element: <MembersPage/>,
     },
     {
         path: "/members/:id",
@@ -43,6 +45,12 @@ const ROUTES = [
         path: "/instruction-plans",
         icon: <TableViewIcon/>,
         element: <InstructionPlansPage />
+    },
+    {
+        name: "Syllabuses",
+        path: "/syllabuses",
+        icon: <TableRowsIcon />,
+        element: <SyllabusesPage />
     }
 ]
 

@@ -9,25 +9,25 @@ import {
     FormControl
 } from "@mui/material";
 import React from "react";
-import {IInstructionPlan} from "../../@types/models/InstructionPlan";
+import {ISyllabus} from "../../@types/models/Syllabus";
 
-export interface EditInstructionPlanDialogProps {
+export interface EditSyllabusDialogProps {
     open: boolean
     onClose: () => void
-    instructionPlan: IInstructionPlan
-    onInstructionPlanUpdate: (data: IInstructionPlan) => void
+    syllabus: ISyllabus
+    onSyllabusUpdate: (data: ISyllabus) => void
 }
 
-export default function EditInstructionPlanDialog(props: EditInstructionPlanDialogProps) {
-    const {open, onClose, instructionPlan, onInstructionPlanUpdate} = props;
+export default function EditSyllabusDialog(props: EditSyllabusDialogProps) {
+    const {open, onClose, syllabus, onSyllabusUpdate} = props;
 
-    const [editedInstructionPlan, setEditedInstructionPlan] = React.useState<IInstructionPlan>({
-        ...instructionPlan
+    const [editedSyllabus, setEditedSyllabus] = React.useState<ISyllabus>({
+        ...syllabus
     });
 
     return (
         <Dialog open={open}>
-            <DialogTitle>Edit Instruction Plan</DialogTitle>
+            <DialogTitle>Edit Syllabus</DialogTitle>
             <DialogContent
                 sx={{
                     display: "flex",
@@ -45,9 +45,9 @@ export default function EditInstructionPlanDialog(props: EditInstructionPlanDial
                             label="Name"
                             type="text"
                             fullWidth
-                            value={editedInstructionPlan.name}
-                            onChange={(e) => setEditedInstructionPlan({
-                                ...editedInstructionPlan,
+                            value={editedSyllabus.name}
+                            onChange={(e) => setEditedSyllabus({
+                                ...editedSyllabus,
                                 name: e.target.value
                             })}
                         />
@@ -58,7 +58,7 @@ export default function EditInstructionPlanDialog(props: EditInstructionPlanDial
                 <Button onClick={onClose}>Cancel</Button>
                 <Button onClick={
                     () => {
-                        onInstructionPlanUpdate(editedInstructionPlan);
+                        onSyllabusUpdate(editedSyllabus);
                         onClose();
                     }
                 }>Update</Button>

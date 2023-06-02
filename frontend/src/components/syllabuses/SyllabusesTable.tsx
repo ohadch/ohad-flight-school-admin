@@ -1,21 +1,21 @@
-import {IInstructionPlan} from "../../@types/models/InstructionPlan";
+import {ISyllabus} from "../../@types/models/Syllabus";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
-export interface InstructionPlansTableProps {
-    instructionPlans: IInstructionPlan[];
-    onInstructionPlanCreate: () => void;
-    onInstructionPlanEdit: (instructionPlan: IInstructionPlan) => void;
-    onInstructionPlanDelete: (instructionPlan: IInstructionPlan) => void;
+export interface SyllabusesTableProps {
+    syllabus: ISyllabus[];
+    onSyllabusCreate: () => void;
+    onSyllabusEdit: (syllabus: ISyllabus) => void;
+    onSyllabusDelete: (syllabus: ISyllabus) => void;
 }
 
-export default function InstructionPlansTable(props : InstructionPlansTableProps) {
+export default function SyllabusesTable(props : SyllabusesTableProps) {
     const {
-        instructionPlans,
-        onInstructionPlanCreate,
-        onInstructionPlanEdit,
-        onInstructionPlanDelete,
+        syllabus,
+        onSyllabusCreate,
+        onSyllabusEdit,
+        onSyllabusDelete,
     } = props;
 
     return (
@@ -30,9 +30,9 @@ export default function InstructionPlansTable(props : InstructionPlansTableProps
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => onInstructionPlanCreate()}
+                        onClick={() => onSyllabusCreate()}
                     >
-                        New Instruction Plan
+                        New Syllabus
                     </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
@@ -45,22 +45,22 @@ export default function InstructionPlansTable(props : InstructionPlansTableProps
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {instructionPlans.map((instructionPlan) => (
-                                <TableRow key={instructionPlan.id}>
+                            {syllabus.map((syllabus) => (
+                                <TableRow key={syllabus.id}>
                                     <TableCell component="th" scope="row">
-                                        {instructionPlan.id}
+                                        {syllabus.id}
                                     </TableCell>
-                                    <TableCell>{instructionPlan.name}</TableCell>
+                                    <TableCell>{syllabus.name}</TableCell>
                                     <TableCell>
                                         <Button
                                             color="primary"
-                                            onClick={() => onInstructionPlanEdit(instructionPlan)}
+                                            onClick={() => onSyllabusEdit(syllabus)}
                                         >
                                             Edit
                                         </Button>
                                         <Button
                                             color="warning"
-                                            onClick={() => onInstructionPlanDelete(instructionPlan)}
+                                            onClick={() => onSyllabusDelete(syllabus)}
                                         >
                                             Delete
                                         </Button>

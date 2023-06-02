@@ -82,7 +82,7 @@ export default function MembersPage() {
                                 color="primary"
                                 onClick={() => setCreateMemberDialogOpen(true)}
                             >
-                                Add Member
+                                New Member
                             </Button>
                         </Grid>
                     </Grid>

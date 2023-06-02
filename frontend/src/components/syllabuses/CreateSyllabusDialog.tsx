@@ -9,25 +9,20 @@ import {
     FormControl
 } from "@mui/material";
 import React from "react";
-import {IInstructionPlan} from "../../@types/models/InstructionPlan";
+import {ISyllabusCreate} from "../../@types/models/Syllabus";
 
-export interface EditInstructionPlanDialogProps {
+export interface CreateSyllabusDialogProps {
     open: boolean
     onClose: () => void
-    instructionPlan: IInstructionPlan
-    onInstructionPlanUpdate: (data: IInstructionPlan) => void
+    onSyllabusCreate: (data: ISyllabusCreate) => void
 }
 
-export default function EditInstructionPlanDialog(props: EditInstructionPlanDialogProps) {
-    const {open, onClose, instructionPlan, onInstructionPlanUpdate} = props;
-
-    const [editedInstructionPlan, setEditedInstructionPlan] = React.useState<IInstructionPlan>({
-        ...instructionPlan
-    });
+export default function CreateSyllabusDialog({open, onClose, onSyllabusCreate}: CreateSyllabusDialogProps) {
+    const [name, setName] = React.useState("");
 
     return (
         <Dialog open={open}>
-            <DialogTitle>Edit Instruction Plan</DialogTitle>
+            <DialogTitle>Create Syllabus</DialogTitle>
             <DialogContent
                 sx={{
                     display: "flex",
@@ -45,11 +40,8 @@ export default function EditInstructionPlanDialog(props: EditInstructionPlanDial
                             label="Name"
                             type="text"
                             fullWidth
-                            value={editedInstructionPlan.name}
-                            onChange={(e) => setEditedInstructionPlan({
-                                ...editedInstructionPlan,
-                                name: e.target.value
-                            })}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                         />
                     </FormControl>
                 </FormGroup>
@@ -58,10 +50,12 @@ export default function EditInstructionPlanDialog(props: EditInstructionPlanDial
                 <Button onClick={onClose}>Cancel</Button>
                 <Button onClick={
                     () => {
-                        onInstructionPlanUpdate(editedInstructionPlan);
+                        onSyllabusCreate({
+                            name,
+                        });
                         onClose();
                     }
-                }>Update</Button>
+                }>Create</Button>
             </DialogActions>
         </Dialog>
     )
