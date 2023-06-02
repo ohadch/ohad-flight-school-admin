@@ -2,6 +2,7 @@ import {IInstructionPlan} from "../../@types/models/InstructionPlan";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import {Link} from "react-router-dom";
 
 export interface InstructionPlansTableProps {
     instructionPlans: IInstructionPlan[];
@@ -52,6 +53,9 @@ export default function InstructionPlansTable(props : InstructionPlansTableProps
                                     </TableCell>
                                     <TableCell>{instructionPlan.name}</TableCell>
                                     <TableCell>
+                                        <Button component={Link} to={`/instruction-plans/${instructionPlan.id}`}>
+                                            View
+                                        </Button>
                                         <Button
                                             color="primary"
                                             onClick={() => onInstructionPlanEdit(instructionPlan)}
