@@ -19,6 +19,7 @@ import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {Route, Routes, useLocation} from "react-router-dom";
 import MembersPage from "./pages/members/MembersPage.tsx";
 import MemberPage from "./pages/member/MemberPage.tsx";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 const DRAWER_WIDTH = 240;
 
@@ -84,17 +85,28 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
     }),
 );
 
-const defaultTheme = createTheme();
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
+
+const lightTheme = createTheme({
+    palette: {
+        mode: 'light',
+    }
+})
 
 export default function App() {
     const [open, setOpen] = React.useState(true);
+    const [theme, setTheme] = React.useState(darkTheme);
     const {pathname} = useLocation();
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={theme}>
             <Box sx={{display: 'flex'}}>
                 <CssBaseline/>
                 <AppBar position="absolute" open={open}>
@@ -162,6 +174,13 @@ export default function App() {
                                     <ListItemText primary={route.name}/>
                                 </ListItemButton>
                             ))}
+                            <Divider/>
+                            <ListItemButton onClick={() => setTheme(theme.palette.mode === 'light' ? darkTheme : lightTheme)}>
+                                <ListItemIcon>
+                                    <Brightness4Icon/>
+                                </ListItemIcon>
+                                <ListItemText primary="Toggle Theme"/>
+                            </ListItemButton>
                         </React.Fragment>
                     </List>
                 </Drawer>
