@@ -28,7 +28,7 @@ cd frontend
 yarn dev
 ```
 
-Run the server
+Run the server:
 ```
 cd server
 source venv/bin/activate
