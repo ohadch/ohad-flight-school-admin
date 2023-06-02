@@ -2,10 +2,37 @@
 
 ## Local Development
 
-### Run the DB
+### Prepare the local machine
+```bash
+# Install the frontend's env
+cd frontend && yarn
 
+# Install the server's env
+cd ../server
+python3.11 -m virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+```
+
+### Run the project
+
+Run the DB:
 ```bash
 docker-compose -f docker-compose.dev.yml up -d db
+```
+
+Run the frontend:
+
+```bash
+cd frontend
+yarn dev
+```
+
+Run the server
+```
+cd server
+source venv/bin/activate
+python main.py
 ```
 
 ### Migrations
