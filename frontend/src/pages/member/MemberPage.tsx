@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {IMember} from "../../@types";
 import {useEffect, useState} from "react";
 import {memberApiService} from "../../services/api";
-import MemberDocuments from "./MemberDocuments.tsx";
+import MemberDocumentsContainer from "../../components/memberDocuments/MemberDocumentsContainer.tsx";
 
 export default function MemberPage() {
     const {id} = useParams();
@@ -24,7 +24,7 @@ export default function MemberPage() {
     return (
         <div>
             <h1>{member.name}</h1>
-            <MemberDocuments member={member} />
+            <MemberDocumentsContainer member={member} />
         </div>
     )
 }

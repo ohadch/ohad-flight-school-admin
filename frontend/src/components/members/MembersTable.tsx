@@ -1,7 +1,7 @@
-import {IMember} from "../../../@types";
 import {Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {Link} from "react-router-dom";
-import {getDisplayNameByMemberStatus} from "../../../utils/members.ts";
+import {getDisplayNameByMemberStatus} from "../../utils/members.ts";
+import {IMember} from "../../@types";
 
 
 export interface MembersTableProps {

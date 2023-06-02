@@ -1,17 +1,17 @@
 import {IMemberDocument, IMemberDocumentCreate} from "../../@types/models/MemberDocument";
-import {Button, Grid} from "@mui/material";
-import MemberDocumentCard from "../../components/members/MemberDocumentCard.tsx";
+import {Grid} from "@mui/material";
 import CreateMemberDocumentDialog from "../../components/members/CreateMemberDocumentDialog.tsx";
 import {useEffect, useState} from "react";
 import {IMember} from "../../@types";
 import {MemberDocumentsApiService} from "../../services/api/memberDocumentsApi.service.ts";
 import {getDisplayNameByMemberDocumentType} from "../../utils/memberDocuments.ts";
+import MemberDocumentsTable from "./MemberDocumentsTable.tsx";
 
 export interface MemberDocumentsProps {
     member: IMember;
 }
 
-export default function MemberDocuments({member}: MemberDocumentsProps) {
+export default function MemberDocumentsContainer({member}: MemberDocumentsProps) {
     const [documents, setDocuments] = useState<IMemberDocument[] | null>(null);
     const [createMemberDocumentDialogOpen, setCreateMemberDocumentDialogOpen] = useState<boolean>(false);
     const memberDocumentsApiService = new MemberDocumentsApiService(member.id);
@@ -60,27 +60,11 @@ export default function MemberDocuments({member}: MemberDocumentsProps) {
                 onMemberDocumentCreate={createMemberDocument}
             />
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => setCreateMemberDocumentDialogOpen(true)}
-                            >
-                                Add Document
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                {documents && documents.map((document) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <MemberDocumentCard
-                            document={document}
-                            onMemberDocumentDelete={() => deleteMemberDocument(document)}
-                        />
-                    </Grid>
-                ))}
+                <MemberDocumentsTable
+                    documents={documents || []}
+                    onMemberDocumentCreate={() => setCreateMemberDocumentDialogOpen(true)}
+                    onMemberDocumentDelete={deleteMemberDocument}
+                />
             </Grid>
         </>
     )

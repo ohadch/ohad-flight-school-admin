@@ -3,7 +3,7 @@ import { IMember, IMemberCreate } from "../../@types";
 import { memberApiService } from "../../services/api";
 import { Button, Grid } from '@mui/material';
 import CreateMemberDialog from '../../components/members/CreateMemberDialog';
-import MembersTable from "./components/MembersTable.tsx";
+import MembersTable from "../../components/members/MembersTable.tsx";
 
 export default function MembersPage() {
     const [members, setMembers] = useState<IMember[]>([]);
