@@ -4,10 +4,12 @@ import { memberApiService } from "../../services/api";
 import { Button, Grid } from '@mui/material';
 import CreateMemberDialog from '../../components/members/CreateMemberDialog';
 import MembersTable from "../../components/members/MembersTable.tsx";
+import EditMemberDialog from "../../components/members/EditMemberDialog.tsx";
 
 export default function MembersPage() {
     const [members, setMembers] = useState<IMember[]>([]);
     const [createMemberDialogOpen, setCreateMemberDialogOpen] = useState<boolean>(false);
+    const [currentlyEditedMember, setCurrentlyEditedMember] = useState<IMember | null>(null);
 
     useEffect(() => {
         memberApiService.get().then((members) => {
@@ -20,6 +22,21 @@ export default function MembersPage() {
             .create(data)
             .then((member) => {
                 setMembers([...members, member]);
+            })
+            .catch((err) => {
+                alert(err);
+            })
+    }
+
+    const editMember = (member: IMember) => {
+        memberApiService
+            .update(member.id, {
+                name: member.name,
+                status: member.status,
+            })
+            .then((member) => {
+                setMembers(members.map((m) => m.id === member.id ? member : m));
+                setCurrentlyEditedMember(null);
             })
             .catch((err) => {
                 alert(err);
@@ -48,6 +65,14 @@ export default function MembersPage() {
                 onClose={() => setCreateMemberDialogOpen(false)}
                 onMemberCreate={addMember}
             />
+            {currentlyEditedMember && (
+                <EditMemberDialog
+                    open={Boolean(currentlyEditedMember)}
+                    onClose={() => setCurrentlyEditedMember(null)}
+                    member={currentlyEditedMember}
+                    onMemberUpdate={editMember}
+                />
+            )}
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
@@ -63,7 +88,11 @@ export default function MembersPage() {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <MembersTable members={members} onDeleteMember={deleteMember} />
+                    <MembersTable
+                        members={members}
+                        onEditMember={setCurrentlyEditedMember}
+                        onDeleteMember={deleteMember}
+                    />
                 </Grid>
             </Grid>
         </>

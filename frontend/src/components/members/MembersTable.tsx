@@ -6,10 +6,11 @@ import {IMember} from "../../@types";
 
 export interface MembersTableProps {
     members: IMember[];
+    onEditMember: (member: IMember) => void;
     onDeleteMember: (member: IMember) => void;
 }
 
-export default function MembersTable({members, onDeleteMember}: MembersTableProps) {
+export default function MembersTable({members, onEditMember, onDeleteMember}: MembersTableProps) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="members table">
@@ -22,7 +23,9 @@ export default function MembersTable({members, onDeleteMember}: MembersTableProp
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {members.map((member) => (
+                    {members
+                        .sort((a, b) => a.id - b.id)
+                        .map((member) => (
                         <TableRow key={member.id}>
                             <TableCell component="th" scope="row">
                                 {member.id}
@@ -38,6 +41,9 @@ export default function MembersTable({members, onDeleteMember}: MembersTableProp
                             <TableCell>
                                 <Button component={Link} to={`/members/${member.id}`}>
                                     View
+                                </Button>
+                                <Button onClick={() => onEditMember(member)}>
+                                    Edit
                                 </Button>
                                 <Button color={"warning"} onClick={() => onDeleteMember(member)}>
                                     Delete
