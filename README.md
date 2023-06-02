@@ -5,18 +5,21 @@
 ### Run the DB
 
 ```bash
-docker-compose up -d db
+docker-compose -f docker-compose.dev.yml up -d db
 ```
 
 ### Migrations
 
 ```bash
+# The migrations are declared in the server folder.
+cd server
+
 # Create migrations
-alembic revision --autogenerate -m "Migration Message"
+make makemigrations message="Some migration message"
 
-# Run migrations
-alembic upgrade head
+# Migrate
+make migrate
 
-# Revert migrations
-alembic downgrade -1
+# Rollback last migration
+make rollback
 ```
