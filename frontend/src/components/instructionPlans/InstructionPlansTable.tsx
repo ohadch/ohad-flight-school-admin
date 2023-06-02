@@ -1,21 +1,21 @@
-import {IMemberDocument} from "../../@types/models/MemberDocument";
+import {IInstructionPlan} from "../../@types/models/InstructionPlan";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
-export interface MemberDocumentsTableProps {
-    documents: IMemberDocument[];
-    onMemberDocumentCreate: () => void;
-    onMemberDocumentEdit: (document: IMemberDocument) => void;
-    onMemberDocumentDelete: (document: IMemberDocument) => void;
+export interface InstructionPlansTableProps {
+    instructionPlans: IInstructionPlan[];
+    onInstructionPlanCreate: () => void;
+    onInstructionPlanEdit: (instructionPlan: IInstructionPlan) => void;
+    onInstructionPlanDelete: (instructionPlan: IInstructionPlan) => void;
 }
 
-export default function MemberDocumentsTable(props: MemberDocumentsTableProps) {
+export default function InstructionPlansTable(props : InstructionPlansTableProps) {
     const {
-        documents,
-        onMemberDocumentCreate,
-        onMemberDocumentEdit,
-        onMemberDocumentDelete,
+        instructionPlans,
+        onInstructionPlanCreate,
+        onInstructionPlanEdit,
+        onInstructionPlanDelete,
     } = props;
 
     return (
@@ -30,40 +30,37 @@ export default function MemberDocumentsTable(props: MemberDocumentsTableProps) {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => onMemberDocumentCreate()}
+                        onClick={() => onInstructionPlanCreate()}
                     >
-                        Add Document
+                        Add Instruction Plan
                     </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label="members table">
+                    <Table sx={{minWidth: 650}} aria-label="instruction plans table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell>Status</TableCell>
-                                <TableCell>Expiration</TableCell>
+                                <TableCell>Name</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {documents.map((document) => (
-                                <TableRow key={document.id}>
+                            {instructionPlans.map((instructionPlan) => (
+                                <TableRow key={instructionPlan.id}>
                                     <TableCell component="th" scope="row">
-                                        {document.id}
+                                        {instructionPlan.id}
                                     </TableCell>
-                                    <TableCell>{document.type}</TableCell>
-                                    <TableCell>{document.status}</TableCell>
-                                    <TableCell>{document.expiration_at}</TableCell>
+                                    <TableCell>{instructionPlan.name}</TableCell>
                                     <TableCell>
                                         <Button
-                                            onClick={() => onMemberDocumentEdit(document)}
+                                            color="primary"
+                                            onClick={() => onInstructionPlanEdit(instructionPlan)}
                                         >
                                             Edit
                                         </Button>
                                         <Button
-                                            color={"warning"}
-                                            onClick={() => onMemberDocumentDelete(document)}
+                                            color="warning"
+                                            onClick={() => onInstructionPlanDelete(instructionPlan)}
                                         >
                                             Delete
                                         </Button>

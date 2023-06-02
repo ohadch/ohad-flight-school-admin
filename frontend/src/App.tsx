@@ -18,6 +18,8 @@ import {Route, Routes, useLocation} from "react-router-dom";
 import MembersPage from "./pages/members/MembersPage.tsx";
 import MemberPage from "./pages/member/MemberPage.tsx";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
+import TableViewIcon from '@mui/icons-material/TableView';
+import InstructionPlansPage from "./pages/instructionPlans/InstructionPlansPage.tsx";
 
 const DRAWER_WIDTH = 240;
 
@@ -35,6 +37,12 @@ const ROUTES = [
     {
         path: "/members/:id",
         element: <MemberPage/>,
+    },
+    {
+        name: "Instruction Plans",
+        path: "/instruction-plans",
+        icon: <TableViewIcon/>,
+        element: <InstructionPlansPage />
     }
 ]
 
