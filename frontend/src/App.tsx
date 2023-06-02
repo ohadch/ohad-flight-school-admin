@@ -41,16 +41,16 @@ const ROUTES = [
         element: <MemberPage/>,
     },
     {
-        name: "Syllabuses",
-        path: "/syllabuses",
-        icon: <TableRowsIcon />,
-        element: <SyllabusesPage />
-    },
-    {
         name: "Instruction Plans",
         path: "/instruction-plans",
         icon: <TableViewIcon/>,
         element: <InstructionPlansPage />
+    },
+    {
+        name: "Syllabuses",
+        path: "/syllabuses",
+        icon: <TableRowsIcon />,
+        element: <SyllabusesPage />
     }
 ]
 
