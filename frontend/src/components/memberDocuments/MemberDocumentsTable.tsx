@@ -37,6 +37,7 @@ export default function MemberDocumentsTable({
                             <TableRow>
                                 <TableCell>ID</TableCell>
                                 <TableCell>Type</TableCell>
+                                <TableCell>Status</TableCell>
                                 <TableCell>Expiration</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
@@ -48,6 +49,7 @@ export default function MemberDocumentsTable({
                                         {document.id}
                                     </TableCell>
                                     <TableCell>{document.type}</TableCell>
+                                    <TableCell>{document.status}</TableCell>
                                     <TableCell>{document.expiration_at}</TableCell>
                                     <TableCell>
                                         <Button

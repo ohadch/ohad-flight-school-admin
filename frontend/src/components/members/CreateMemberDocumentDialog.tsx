@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import {getDisplayNameByMemberDocumentType} from "../../utils/memberDocuments.ts";
-import {IMemberDocumentCreate, MemberDocumentType} from "../../@types/models/MemberDocument";
+import {IMemberDocumentCreate, MemberDocumentStatus, MemberDocumentType} from "../../@types/models/MemberDocument";
 
 export interface CreateMemberDocumentDialogProps {
     open: boolean
@@ -21,12 +21,24 @@ export interface CreateMemberDocumentDialogProps {
 export default function CreateMemberDocumentDialog({open, onClose, onMemberDocumentCreate}: CreateMemberDocumentDialogProps) {
     const [memberDocumentType, setMemberDocumentType] = React.useState<MemberDocumentType>(MemberDocumentType.MEDICAL);
     const [expirationAt, setExpirationAt] = React.useState<Date>(new Date());
+    const [documentStatus, setDocumentStatus] = React.useState<MemberDocumentStatus>(MemberDocumentStatus.PENDING);
 
     return (
         <Dialog open={open}>
             <DialogTitle>Create Member Document</DialogTitle>
-            <DialogContent>
-                <FormGroup>
+            <DialogContent
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                    width: 400,
+                }}
+            >
+                <FormGroup
+                    style={{
+                        paddingTop: 5,
+                    }}
+                >
                     <FormControl>
                         <InputLabel id="member-document-type-label">Document Type</InputLabel>
                         <Select
@@ -38,6 +50,22 @@ export default function CreateMemberDocumentDialog({open, onClose, onMemberDocum
                         >
                             {Object.values(MemberDocumentType).map((type) => (
                                 <MenuItem key={type} value={type}>{getDisplayNameByMemberDocumentType(type)}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup>
+                    <FormControl>
+                        <InputLabel id="member-document-status-label">Document Status</InputLabel>
+                        <Select
+                            labelId="member-document-status-label"
+                            id="member-document-status"
+                            value={documentStatus}
+                            label="Document Status"
+                            onChange={(e) => setDocumentStatus(e.target.value as MemberDocumentStatus)}
+                        >
+                            {Object.values(MemberDocumentStatus).map((status) => (
+                                <MenuItem key={status} value={status}>{status}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -60,7 +88,8 @@ export default function CreateMemberDocumentDialog({open, onClose, onMemberDocum
                     () => {
                         onMemberDocumentCreate({
                             type: memberDocumentType,
-                            expiration_at: expirationAt
+                            expiration_at: expirationAt.toISOString(),
+                            status: documentStatus,
                         });
                         onClose();
                     }

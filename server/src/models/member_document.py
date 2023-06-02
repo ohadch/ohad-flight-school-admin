@@ -12,18 +12,25 @@ class MemberDocumentType(enum.Enum):
     MEMBERSHIP_AGREEMENT = "membership_agreement"
 
 
+class MemberDocumentStatus(enum.Enum):
+    PENDING = "pending"
+    VALID = "valid"
+
+
 class MemberDocument(Base):
 
     __tablename__ = "member_documents"
-    __tableargs__ = (
-        UniqueConstraint("member_id", "type", name="member_document_member_id_type_unique"),
-    )
 
     id = Column(Integer, primary_key=True, index=True)
     member_id = Column(Integer, ForeignKey("members.id"))
     type = Column(
         Enum(MemberDocumentType),
         nullable=False,
+    )
+    status = Column(
+        Enum(MemberDocumentStatus),
+        nullable=False,
+        default=MemberDocumentStatus.PENDING,
     )
     expiration_at = Column(DateTime, nullable=True)
 

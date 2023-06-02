@@ -3,3 +3,9 @@ export enum MemberDocumentType {
     MEDICAL = "medical",
     MEMBERSHIP_AGREEMENT = "membership_agreement"
 }
+
+
+export enum MemberDocumentStatus {
+    PENDING = "pending",
+    VALID = "valid",
+}
