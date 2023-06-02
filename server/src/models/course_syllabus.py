@@ -6,12 +6,12 @@ from src.config.database import Base
 
 class InstructionPlanSyllabus(Base):
 
-    __tablename__ = "instruction_plan_syllabuses"
+    __tablename__ = "course_syllabuses"
 
     id = Column(Integer, primary_key=True, index=True)
-    instruction_plan_id = Column(
+    course_id = Column(
         Integer,
-        ForeignKey("instruction_plans.id"),
+        ForeignKey("courses.id"),
     )
     syllabus_id = Column(
         Integer,
@@ -20,11 +20,11 @@ class InstructionPlanSyllabus(Base):
 
     __table_args__ = (
         UniqueConstraint(
-            "instruction_plan_id",
+            "course_id",
             "syllabus_id",
-            name="instruction_plan_syllabus_instruction_plan_id_syllabus_id_uc",
+            name="course_syllabus_course_id_syllabus_id_uc",
         ),
     )
 
-    instruction_plan = relationship("InstructionPlan")
+    course = relationship("Course")
     syllabus = relationship("Syllabus")

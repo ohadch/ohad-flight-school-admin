@@ -1,23 +1,23 @@
 import {Grid} from "@mui/material";
 import {useEffect, useState} from "react";
-import InstructionPlanSyllabusesTable from "./InstructionPlanSyllabusesTable.tsx";
-import {instructionPlansApiService} from "../../services/api/instructionPlansApi.service.ts";
-import {IInstructionPlan, ISyllabus} from "../../@types";
-import InstructionPlanAddSyllabusDialog from "./InstructionPlanAttachSyllabusDialog.tsx";
+import CourseSyllabusesTable from "./CourseSyllabusesTable.tsx";
+import {coursesApiService} from "../../services/api/coursesApi.service.ts";
+import {ICourse, ISyllabus} from "../../@types";
+import CourseAddSyllabusDialog from "./CourseAddSyllabusDialog.tsx";
 
-export interface InstructionPlanSyllabusesContainerProps {
-    instructionPlan: IInstructionPlan;
+export interface CourseSyllabusesContainerProps {
+    course: ICourse;
 }
 
-export default function InstructionPlanSyllabusesContainer(props: InstructionPlanSyllabusesContainerProps) {
-    const {instructionPlan} = props;
+export default function CourseSyllabusesContainer(props: CourseSyllabusesContainerProps) {
+    const {course} = props;
     const [syllabuses, setSyllabuses] = useState<ISyllabus[] | null>(null);
     const [attachSyllabusDialogOpen, setAttachSyllabusDialogOpen] = useState<boolean>(false);
 
     useEffect(() => {
         if (!syllabuses) {
-            instructionPlansApiService.getSyllabusesByInstructionPlanId(
-                instructionPlan.id
+            coursesApiService.getSyllabusesByCourseId(
+                course.id
             ).then((syllabuses) => {
                 setSyllabuses(syllabuses);
             });
@@ -25,8 +25,8 @@ export default function InstructionPlanSyllabusesContainer(props: InstructionPla
     })
 
     const onSyllabusAdded = (syllabus: ISyllabus) => {
-        instructionPlansApiService.addSyllabusToInstructionPlan(
-            instructionPlan.id,
+        coursesApiService.addSyllabusToCourse(
+            course.id,
             syllabus.id
         ).then(() => {
             setSyllabuses([
@@ -40,12 +40,12 @@ export default function InstructionPlanSyllabusesContainer(props: InstructionPla
     }
 
     const onSyllabusRemoved = (syllabus: ISyllabus) => {
-        if (!confirm(`Are you sure you want to remove syllabus "${syllabus.name}" from instruction plan "${instructionPlan.name}"?`)) {
+        if (!confirm(`Are you sure you want to remove syllabus "${syllabus.name}" from course "${course.name}"?`)) {
             return
         }
         
-        instructionPlansApiService.removeSyllabusFromInstructionPlan(
-            instructionPlan.id,
+        coursesApiService.removeSyllabusFromCourse(
+            course.id,
             syllabus.id
         ).then(() => {
             setSyllabuses(
@@ -59,14 +59,14 @@ export default function InstructionPlanSyllabusesContainer(props: InstructionPla
 
     return (
         <>
-            <InstructionPlanAddSyllabusDialog
+            <CourseAddSyllabusDialog
                 open={attachSyllabusDialogOpen}
                 onSyllabusAttach={onSyllabusAdded}
                 onClose={() => setAttachSyllabusDialogOpen(false)}
-                instructionPlanSyllabuses={syllabuses || []}
+                courseSyllabuses={syllabuses || []}
             />
             <Grid container spacing={2}>
-                <InstructionPlanSyllabusesTable
+                <CourseSyllabusesTable
                     onOpenAddSyllabusDialog={() => setAttachSyllabusDialogOpen(true)}
                     onSyllabusRemove={onSyllabusRemoved}
                     syllabuses={syllabuses || []}

@@ -1,25 +1,25 @@
 import {ModelApi} from "./modelApi.service.ts";
 import axios from "axios";
-import {IInstructionPlan, IInstructionPlanCreate, IInstructionPlanUpdate, ISyllabus} from "../../@types";
+import {ICourse, ICourseCreate, ICourseUpdate, ISyllabus} from "../../@types";
 
-class InstructionPlansApiService extends ModelApi<IInstructionPlan, IInstructionPlanCreate, IInstructionPlanUpdate> {
+class CoursesApiService extends ModelApi<ICourse, ICourseCreate, ICourseUpdate> {
     constructor() {
-        super("/instruction_plans");
+        super("/courses");
     }
 
-    async getSyllabusesByInstructionPlanId(id: number): Promise<ISyllabus[]> {
+    async getSyllabusesByCourseId(id: number): Promise<ISyllabus[]> {
         const response = await axios.get<ISyllabus[]>(`${this.API_URL}${this.endpoint}/${id}/syllabuses`);
         return response.data;
     }
 
-    async addSyllabusToInstructionPlan(id: number, syllabusId: number): Promise<ISyllabus[]> {
+    async addSyllabusToCourse(id: number, syllabusId: number): Promise<ISyllabus[]> {
         const response = await axios.post<ISyllabus[]>(
             `${this.API_URL}${this.endpoint}/${id}/syllabuses?syllabus_id=${syllabusId}`,
         );
         return response.data;
     }
 
-    async removeSyllabusFromInstructionPlan(id: number, syllabusId: number): Promise<ISyllabus[]> {
+    async removeSyllabusFromCourse(id: number, syllabusId: number): Promise<ISyllabus[]> {
         const response = await axios.delete<ISyllabus[]>(
             `${this.API_URL}${this.endpoint}/${id}/syllabuses?syllabus_id=${syllabusId}`,
         );
@@ -27,4 +27,4 @@ class InstructionPlansApiService extends ModelApi<IInstructionPlan, IInstruction
     }
 }
 
-export const instructionPlansApiService = new InstructionPlansApiService();
+export const coursesApiService = new CoursesApiService();

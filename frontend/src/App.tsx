@@ -20,9 +20,9 @@ import MemberPage from "./pages/member/MemberPage.tsx";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import TableViewIcon from '@mui/icons-material/TableView';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import InstructionPlansPage from "./pages/instructionPlans/InstructionPlansPage.tsx";
+import CoursesPage from "./pages/courses/CoursesPage.tsx";
 import SyllabusesPage from "./pages/syllabuses/SyllabusesPage.tsx";
-import InstructionPlanPage from "./pages/instructionPlan/InstructionPlanPage.tsx";
+import CoursePage from "./pages/course/CoursePage.tsx";
 
 const DRAWER_WIDTH = 240;
 
@@ -42,14 +42,14 @@ const ROUTES = [
         element: <MemberPage/>,
     },
     {
-        name: "Instruction Plans",
-        path: "/instruction-plans",
+        name: "Courses",
+        path: "/courses",
         icon: <TableViewIcon/>,
-        element: <InstructionPlansPage />
+        element: <CoursesPage />
     },
     {
-        path: "/instruction-plans/:id",
-        element: <InstructionPlanPage />
+        path: "/courses/:id",
+        element: <CoursePage />
     },
     {
         name: "Syllabuses",

@@ -11,16 +11,16 @@ import {useEffect, useState} from "react";
 import {ISyllabus} from "../../@types";
 import {syllabusesApiService} from "../../services/api/syllabusesApi.service.ts";
 
-export interface InstructionPlanAttachSyllabusDialogProps {
+export interface CourseAttachSyllabusDialogProps {
     open: boolean
     onClose: () => void
     onSyllabusAttach: (syllabusId: ISyllabus) => void
-    instructionPlanSyllabuses: ISyllabus[]
+    courseSyllabuses: ISyllabus[]
 }
 
 
-export default function InstructionPlanAttachSyllabusDialog(props: InstructionPlanAttachSyllabusDialogProps) {
-    const {open, onClose, onSyllabusAttach, instructionPlanSyllabuses} = props;
+export default function CourseAttachSyllabusDialog(props: CourseAttachSyllabusDialogProps) {
+    const {open, onClose, onSyllabusAttach, courseSyllabuses} = props;
     const [allSyllabuses, setAllSyllabuses] = useState<ISyllabus[] | null>(null);
     const [attachedSyllabus, setAttachedSyllabus] = useState<ISyllabus | null>(null);
 
@@ -33,14 +33,14 @@ export default function InstructionPlanAttachSyllabusDialog(props: InstructionPl
     })
 
     const availableSyllabuses = allSyllabuses?.filter((syllabus) => {
-        return !instructionPlanSyllabuses.find((instructionPlanSyllabus) => {
-            return instructionPlanSyllabus.id === syllabus.id;
+        return !courseSyllabuses.find((courseSyllabus) => {
+            return courseSyllabus.id === syllabus.id;
         });
     }) || [];
 
     return (
         <Dialog open={open}>
-            <DialogTitle>Attach Syllabus to Instruction Plan</DialogTitle>
+            <DialogTitle>Attach Syllabus to Course</DialogTitle>
             <DialogContent
                 sx={{
                     display: "flex",

@@ -3,13 +3,13 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import {ISyllabus} from "../../@types";
 
-export interface InstructionPlanSyllabusesTableProps {
+export interface CourseSyllabusesTableProps {
     syllabuses: ISyllabus[];
     onOpenAddSyllabusDialog: () => void;
     onSyllabusRemove: (syllabus: ISyllabus) => void;
 }
 
-export default function InstructionPlanSyllabusesTable(props: InstructionPlanSyllabusesTableProps) {
+export default function CourseSyllabusesTable(props: CourseSyllabusesTableProps) {
     const {
         syllabuses,
         onOpenAddSyllabusDialog,

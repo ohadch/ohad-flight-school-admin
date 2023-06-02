@@ -1,22 +1,22 @@
-import {IInstructionPlan} from "../../@types/models/InstructionPlan";
+import {ICourse} from "../../@types/models/Course";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import {Link} from "react-router-dom";
 
-export interface InstructionPlansTableProps {
-    instructionPlans: IInstructionPlan[];
-    onInstructionPlanCreate: () => void;
-    onInstructionPlanEdit: (instructionPlan: IInstructionPlan) => void;
-    onInstructionPlanDelete: (instructionPlan: IInstructionPlan) => void;
+export interface CoursesTableProps {
+    courses: ICourse[];
+    onCourseCreate: () => void;
+    onCourseEdit: (course: ICourse) => void;
+    onCourseDelete: (course: ICourse) => void;
 }
 
-export default function InstructionPlansTable(props : InstructionPlansTableProps) {
+export default function CoursesTable(props : CoursesTableProps) {
     const {
-        instructionPlans,
-        onInstructionPlanCreate,
-        onInstructionPlanEdit,
-        onInstructionPlanDelete,
+        courses,
+        onCourseCreate,
+        onCourseEdit,
+        onCourseDelete,
     } = props;
 
     return (
@@ -31,13 +31,13 @@ export default function InstructionPlansTable(props : InstructionPlansTableProps
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => onInstructionPlanCreate()}
+                        onClick={() => onCourseCreate()}
                     >
-                        New Instruction Plan
+                        New Course
                     </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label="instruction plans table">
+                    <Table sx={{minWidth: 650}} aria-label="courses table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -46,25 +46,25 @@ export default function InstructionPlansTable(props : InstructionPlansTableProps
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {instructionPlans.map((instructionPlan) => (
-                                <TableRow key={instructionPlan.id}>
+                            {courses.map((course) => (
+                                <TableRow key={course.id}>
                                     <TableCell component="th" scope="row">
-                                        {instructionPlan.id}
+                                        {course.id}
                                     </TableCell>
-                                    <TableCell>{instructionPlan.name}</TableCell>
+                                    <TableCell>{course.name}</TableCell>
                                     <TableCell>
-                                        <Button component={Link} to={`/instruction-plans/${instructionPlan.id}`}>
+                                        <Button component={Link} to={`/courses/${course.id}`}>
                                             View
                                         </Button>
                                         <Button
                                             color="primary"
-                                            onClick={() => onInstructionPlanEdit(instructionPlan)}
+                                            onClick={() => onCourseEdit(course)}
                                         >
                                             Edit
                                         </Button>
                                         <Button
                                             color="warning"
-                                            onClick={() => onInstructionPlanDelete(instructionPlan)}
+                                            onClick={() => onCourseDelete(course)}
                                         >
                                             Delete
                                         </Button>

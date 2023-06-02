@@ -1,7 +1,7 @@
 import {ModelApi} from "./modelApi.service.ts";
-import {IInstructionPlan, IInstructionPlanCreate, IInstructionPlanUpdate} from "../../@types/models/InstructionPlan";
+import {ICourse, ICourseCreate, ICourseUpdate} from "../../@types/models/Course";
 
-class SyllabusesApiService extends ModelApi<IInstructionPlan, IInstructionPlanCreate, IInstructionPlanUpdate> {
+class SyllabusesApiService extends ModelApi<ICourse, ICourseCreate, ICourseUpdate> {
     constructor() {
         super("/syllabuses");
     }

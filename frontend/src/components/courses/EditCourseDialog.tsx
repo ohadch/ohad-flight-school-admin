@@ -9,20 +9,25 @@ import {
     FormControl
 } from "@mui/material";
 import React from "react";
-import {IInstructionPlanCreate} from "../../@types/models/InstructionPlan";
+import {ICourse} from "../../@types/models/Course";
 
-export interface CreateInstructionPlanDialogProps {
+export interface EditCourseDialogProps {
     open: boolean
     onClose: () => void
-    onInstructionPlanCreate: (data: IInstructionPlanCreate) => void
+    course: ICourse
+    onCourseUpdate: (data: ICourse) => void
 }
 
-export default function CreateInstructionPlanDialog({open, onClose, onInstructionPlanCreate}: CreateInstructionPlanDialogProps) {
-    const [name, setName] = React.useState("");
+export default function EditCourseDialog(props: EditCourseDialogProps) {
+    const {open, onClose, course, onCourseUpdate} = props;
+
+    const [editedCourse, setEditedCourse] = React.useState<ICourse>({
+        ...course
+    });
 
     return (
         <Dialog open={open}>
-            <DialogTitle>Create Instruction Plan</DialogTitle>
+            <DialogTitle>Edit Course</DialogTitle>
             <DialogContent
                 sx={{
                     display: "flex",
@@ -40,8 +45,11 @@ export default function CreateInstructionPlanDialog({open, onClose, onInstructio
                             label="Name"
                             type="text"
                             fullWidth
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={editedCourse.name}
+                            onChange={(e) => setEditedCourse({
+                                ...editedCourse,
+                                name: e.target.value
+                            })}
                         />
                     </FormControl>
                 </FormGroup>
@@ -50,12 +58,10 @@ export default function CreateInstructionPlanDialog({open, onClose, onInstructio
                 <Button onClick={onClose}>Cancel</Button>
                 <Button onClick={
                     () => {
-                        onInstructionPlanCreate({
-                            name,
-                        });
+                        onCourseUpdate(editedCourse);
                         onClose();
                     }
-                }>Create</Button>
+                }>Update</Button>
             </DialogActions>
         </Dialog>
     )

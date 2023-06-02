@@ -36,7 +36,7 @@ export default function SyllabusesTable(props : SyllabusesTableProps) {
                     </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label="instruction plans table">
+                    <Table sx={{minWidth: 650}} aria-label="courses table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>

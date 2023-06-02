@@ -1,3 +1,3 @@
 export * from "./models/Member";
-export * from "./models/InstructionPlan";
+export * from "./models/Course";
 export * from "./models/Syllabus";
