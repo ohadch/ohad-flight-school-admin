@@ -81,7 +81,7 @@ export default function EditMemberDialog({open, onClose, member, onMemberUpdate}
                         onMemberUpdate(editedMember);
                         onClose();
                     }
-                }>Edit</Button>
+                }>Update</Button>
             </DialogActions>
         </Dialog>
     )

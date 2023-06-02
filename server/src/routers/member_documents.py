@@ -39,8 +39,11 @@ async def create_member_document(member_id: int, member_document_schema: MemberD
 @router.put("/{document_id}", response_model=MemberDocumentSchema)
 async def update_member_document(member_id: int, document_id: int, member_document_schema: MemberDocumentUpdateSchema, db: Session = Depends(get_db)):
     member = db.query(Member).get(member_id)
-    member_document = member.documents.get(document_id)
-    member_document.update(**member_document_schema.__dict__)
+    member_document = db.query(MemberDocument).get(document_id)
+
+    for key, value in member_document_schema.__dict__.items():
+        setattr(member_document, key, value)
+
     db.commit()
     db.refresh(member_document)
     return member_document

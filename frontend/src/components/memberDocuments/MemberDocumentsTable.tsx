@@ -6,12 +6,14 @@ import Toolbar from "@mui/material/Toolbar";
 export interface MemberDocumentsTableProps {
     documents: IMemberDocument[];
     onMemberDocumentCreate: () => void;
+    onMemberDocumentEdit: (document: IMemberDocument) => void;
     onMemberDocumentDelete: (document: IMemberDocument) => void;
 }
 
 export default function MemberDocumentsTable({
                                                  documents,
                                                  onMemberDocumentCreate,
+                                                 onMemberDocumentEdit,
                                                  onMemberDocumentDelete,
                                              }: MemberDocumentsTableProps) {
     return (
@@ -52,6 +54,11 @@ export default function MemberDocumentsTable({
                                     <TableCell>{document.status}</TableCell>
                                     <TableCell>{document.expiration_at}</TableCell>
                                     <TableCell>
+                                        <Button
+                                            onClick={() => onMemberDocumentEdit(document)}
+                                        >
+                                            Edit
+                                        </Button>
                                         <Button
                                             color={"warning"}
                                             onClick={() => onMemberDocumentDelete(document)}
