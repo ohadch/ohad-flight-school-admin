@@ -22,6 +22,7 @@ import TableViewIcon from '@mui/icons-material/TableView';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import InstructionPlansPage from "./pages/instructionPlans/InstructionPlansPage.tsx";
 import SyllabusesPage from "./pages/syllabuses/SyllabusesPage.tsx";
+import InstructionPlanPage from "./pages/instructionPlan/InstructionPlanPage.tsx";
 
 const DRAWER_WIDTH = 240;
 
@@ -45,6 +46,10 @@ const ROUTES = [
         path: "/instruction-plans",
         icon: <TableViewIcon/>,
         element: <InstructionPlansPage />
+    },
+    {
+        path: "/instruction-plans/:id",
+        element: <InstructionPlanPage />
     },
     {
         name: "Syllabuses",
