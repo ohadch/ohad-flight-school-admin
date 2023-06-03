@@ -166,7 +166,7 @@ export default function App() {
                             noWrap
                             sx={{flexGrow: 1}}
                         >
-                            Gliding Course Management
+                            Flight School Admin
                         </Typography>
                     </Toolbar>
                 </AppBar>
