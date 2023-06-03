@@ -16,6 +16,7 @@ export interface CreateEnrollmentDialogProps {
     onEnrollmentCreate: (data: IEnrollmentCreate) => void
     courses: ICourse[]
     members: IMember[]
+    member?: IMember
 }
 
 export default function CreateEnrollmentDialog(props: CreateEnrollmentDialogProps) {
@@ -24,10 +25,13 @@ export default function CreateEnrollmentDialog(props: CreateEnrollmentDialogProp
         courses,
         open,
         onClose,
-        onEnrollmentCreate
+        onEnrollmentCreate,
+        member
     } = props;
 
-    const [member, setMember] = React.useState<IMember | null>(null);
+    const [enrolledMember, setEnrolledMember] = React.useState<IMember | null>(
+        member || null
+    );
     const [course, setCourse] = React.useState<ICourse | null>(null);
     const [enrollmentStatus, setEnrollmentStatus] = React.useState<EnrollmentStatus>(EnrollmentStatus.PENDING);
 
@@ -50,13 +54,14 @@ export default function CreateEnrollmentDialog(props: CreateEnrollmentDialogProp
                     <FormControl>
                         <InputLabel id="member-label">Member</InputLabel>
                         <Select
+                            disabled={!!member}
                             labelId="member-label"
                             id="member"
-                            value={member?.id || ""}
+                            value={enrolledMember?.id || ""}
                             label="Member"
                             onChange={(e) => {
                                 const member = props.members.find((member) => member.id === e.target.value);
-                                setMember(member || null);
+                                setEnrolledMember(member || null);
                             }}
                         >
                             {members.map((member) => (
@@ -104,15 +109,15 @@ export default function CreateEnrollmentDialog(props: CreateEnrollmentDialogProp
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
                 <Button
-                    disabled={!member || !course}
+                    disabled={!enrolledMember || !course}
                     onClick={
                         () => {
-                            if (!member || !course) {
+                            if (!enrolledMember || !course) {
                                 return;
                             }
 
                             onEnrollmentCreate({
-                                member_id: member.id,
+                                member_id: enrolledMember.id,
                                 course_id: course.id,
                                 status: enrollmentStatus,
                             });

@@ -1,4 +1,3 @@
-import {Grid} from "@mui/material";
 import CreateMemberDocumentDialog from "./CreateMemberDocumentDialog.tsx";
 import {useEffect, useState} from "react";
 import {IDocumentType, IMemberDocument, IMemberDocumentCreate, IMember} from "../../@types";
@@ -95,15 +94,13 @@ export default function MemberDocumentsContainer({member}: MemberDocumentsProps)
                     onMemberDocumentUpdate={updateMemberDocument}
                 />
             )}
-            <Grid container spacing={2}>
-                <MemberDocumentsTable
-                    documents={documents || []}
-                    documentTypes={documentTypes || []}
-                    onMemberDocumentCreate={() => setCreateMemberDocumentDialogOpen(true)}
-                    onMemberDocumentEdit={(document) => setCurrentlyEditedMemberDocument(document)}
-                    onMemberDocumentDelete={deleteMemberDocument}
-                />
-            </Grid>
+            <MemberDocumentsTable
+                documents={documents || []}
+                documentTypes={documentTypes || []}
+                onMemberDocumentCreate={() => setCreateMemberDocumentDialogOpen(true)}
+                onMemberDocumentEdit={(document) => setCurrentlyEditedMemberDocument(document)}
+                onMemberDocumentDelete={deleteMemberDocument}
+            />
         </>
     )
 }

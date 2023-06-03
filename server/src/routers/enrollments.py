@@ -13,7 +13,18 @@ router = APIRouter(
 
 
 @router.get("/", response_model=list[EnrollmentSchema])
-async def read_enrollments(db: Session = Depends(get_db)):
+async def read_enrollments(db: Session = Depends(get_db), member_id: int = None, course_id: int = None):
+    search_params = {}
+
+    if member_id:
+        search_params["member_id"] = member_id
+
+    if course_id:
+        search_params["course_id"] = course_id
+
+    if search_params:
+        return db.query(Enrollment).filter_by(**search_params).all()
+
     return db.query(Enrollment).all()
 
 

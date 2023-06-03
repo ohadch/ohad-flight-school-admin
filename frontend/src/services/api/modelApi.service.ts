@@ -5,8 +5,14 @@ export class ModelApi<TModel, TModelCreate, TModelUpdate> {
 
   constructor(protected endpoint: string) {}
 
-  async get() {
-    const response = await axios.get<TModel[]>(`${this.API_URL}${this.endpoint}/`);
+  async get(data?: Partial<TModel>) {
+    const queryString = data ? "?" + Object
+        .entries(data)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&")
+        : "";
+
+    const response = await axios.get<TModel[]>(`${this.API_URL}${this.endpoint}/${queryString}`);
     return response.data;
   }
 
