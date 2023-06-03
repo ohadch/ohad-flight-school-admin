@@ -1,7 +1,6 @@
 # Flight School Admin
 
-System for managing flight schools. 
-I am a flight instructor, and I designed the system specifically for my needs.
+A System for managing flight schools, designed specifically for my needs as a flight instructor.
 
 ![flight-school-admin-preview-june-2-2023](https://github.com/ohadch/ohad-flight-school-admin/assets/17769668/dcd4ba4f-66bd-4798-976d-c0ee1a26316e)
 
