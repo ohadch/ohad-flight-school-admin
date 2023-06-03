@@ -1,8 +1,9 @@
-import {IEnrollment} from "../../@types/models/Enrollment";
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {EnrollmentStatus, IEnrollment} from "../../@types/models/Enrollment";
+import {Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import {ICourse, IMember} from "../../@types";
+import {getDisplayNameByEnrollmentStatus} from "../../utils/enrollments.ts";
 
 export interface EnrollmentsTableProps {
     enrollments: IEnrollment[];
@@ -61,7 +62,18 @@ export default function EnrollmentsTable(props : EnrollmentsTableProps) {
                                         {enrollment.id}
                                     </TableCell>
                                     <TableCell>
-                                        {enrollment.status}
+                                        <Chip
+                                            label={getDisplayNameByEnrollmentStatus(enrollment.status)}
+                                            color={
+                                                enrollment.status === EnrollmentStatus.COURSE_IN_PROGRESS
+                                                    ? "primary"
+                                                    : enrollment.status === EnrollmentStatus.COURSE_COMPLETED
+                                                    ? "success"
+                                                    : enrollment.status === EnrollmentStatus.CANCELED
+                                                    ? "error"
+                                                    : "default"
+                                            }
+                                        />
                                     </TableCell>
                                     <TableCell>
                                         {getMemberById(enrollment.member_id)?.name}
