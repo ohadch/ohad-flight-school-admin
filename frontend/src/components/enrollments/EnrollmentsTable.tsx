@@ -1,8 +1,7 @@
-import {EnrollmentStatus, IEnrollment} from "../../@types/models/Enrollment";
 import {Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import {ICourse, IMember} from "../../@types";
+import {ICourse, IMember, EnrollmentStatus, IEnrollment} from "../../@types";
 import {getDisplayNameByEnrollmentStatus} from "../../utils/enrollments.ts";
 
 export interface EnrollmentsTableProps {
@@ -12,10 +11,12 @@ export interface EnrollmentsTableProps {
     onEnrollmentCreate: () => void;
     onEnrollmentEdit: (enrollment: IEnrollment) => void;
     onEnrollmentDelete: (enrollment: IEnrollment) => void;
+    member?: IMember;
 }
 
 export default function EnrollmentsTable(props : EnrollmentsTableProps) {
     const {
+        member,
         enrollments,
         members,
         courses,
@@ -50,7 +51,7 @@ export default function EnrollmentsTable(props : EnrollmentsTableProps) {
                             <TableRow>
                                 <TableCell>ID</TableCell>
                                 <TableCell>Status</TableCell>
-                                <TableCell>Member</TableCell>
+                                {member ? null : <TableCell>Member</TableCell>}
                                 <TableCell>Course</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
@@ -75,9 +76,11 @@ export default function EnrollmentsTable(props : EnrollmentsTableProps) {
                                             }
                                         />
                                     </TableCell>
-                                    <TableCell>
-                                        {getMemberById(enrollment.member_id)?.name}
-                                    </TableCell>
+                                    {member ? null : (
+                                        <TableCell>
+                                            {getMemberById(enrollment.member_id)?.name}
+                                        </TableCell>
+                                    )}
                                     <TableCell>
                                         {getCourseById(enrollment.course_id)?.name}
                                     </TableCell>
