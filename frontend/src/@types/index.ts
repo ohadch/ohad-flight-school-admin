@@ -3,3 +3,4 @@ export * from "./models/Course";
 export * from "./models/Syllabus";
 export * from "./models/DocumentType";
 export * from "./models/MemberDocument";
+export * from "./models/Enrollment";
