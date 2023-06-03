@@ -2,6 +2,7 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import {ISyllabus} from "../../@types";
+import {Link} from "react-router-dom";
 
 export interface CourseSyllabusesTableProps {
     syllabuses: ISyllabus[];
@@ -50,6 +51,9 @@ export default function CourseSyllabusesTable(props: CourseSyllabusesTableProps)
                                     </TableCell>
                                     <TableCell>{syllabus.name}</TableCell>
                                     <TableCell>
+                                        <Button component={Link} to={`/syllabuses/${syllabus.id}`}>
+                                            View
+                                        </Button>
                                         <Button
                                             color={"warning"}
                                             onClick={() => onSyllabusRemove(syllabus)}
