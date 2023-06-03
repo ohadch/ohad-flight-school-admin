@@ -2,7 +2,6 @@ import {IEnrollment} from "../../@types/models/Enrollment";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import {Link} from "react-router-dom";
 import {ICourse, IMember} from "../../@types";
 
 export interface EnrollmentsTableProps {
@@ -71,9 +70,6 @@ export default function EnrollmentsTable(props : EnrollmentsTableProps) {
                                         {getCourseById(enrollment.course_id)?.name}
                                     </TableCell>
                                     <TableCell>
-                                        <Button component={Link} to={`/enrollments/${enrollment.id}`}>
-                                            View
-                                        </Button>
                                         <Button
                                             color="primary"
                                             onClick={() => onEnrollmentEdit(enrollment)}
