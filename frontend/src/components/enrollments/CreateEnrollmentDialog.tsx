@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import {IEnrollmentCreate, EnrollmentStatus, ICourse, IMember} from "../../@types";
+import {getDisplayNameByEnrollmentStatus} from "../../utils/enrollments.ts";
 
 export interface CreateEnrollmentDialogProps {
     open: boolean
@@ -100,7 +101,9 @@ export default function CreateEnrollmentDialog(props: CreateEnrollmentDialogProp
                             onChange={(e) => setEnrollmentStatus(e.target.value as EnrollmentStatus)}
                         >
                             {Object.values(EnrollmentStatus).map((status) => (
-                                <MenuItem key={status} value={status}>{status}</MenuItem>
+                                <MenuItem key={status} value={status}>
+                                    {getDisplayNameByEnrollmentStatus(status)}
+                                </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
