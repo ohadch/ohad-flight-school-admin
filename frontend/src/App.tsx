@@ -61,6 +61,10 @@ const ROUTES = [
         element: React.lazy(() => import('./pages/syllabuses/SyllabusesPage.tsx')),
     },
     {
+        path: "/syllabuses/:id",
+        element: React.lazy(() => import('./pages/syllabus/SyllabusPage.tsx')),
+    },
+    {
         name: "Document Types",
         path: "/document-types",
         icon: <BadgeIcon />,

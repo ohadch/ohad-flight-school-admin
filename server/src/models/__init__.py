@@ -5,3 +5,4 @@ from .syllabus import Syllabus
 from .course_syllabus import InstructionPlanSyllabus
 from .document_type import DocumentType
 from .enrollment import Enrollment
+from .syllabus_item import SyllabusItem
