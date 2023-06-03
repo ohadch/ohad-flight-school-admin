@@ -1,22 +1,21 @@
-import {ISyllabus} from "../../@types/models/Syllabus";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import {Link} from "react-router-dom";
+import {ISyllabusItem} from "../../@types";
 
-export interface SyllabusesTableProps {
-    syllabus: ISyllabus[];
-    onSyllabusCreate: () => void;
-    onSyllabusEdit: (syllabus: ISyllabus) => void;
-    onSyllabusDelete: (syllabus: ISyllabus) => void;
+export interface SyllabusItemsTableProps {
+    items: ISyllabusItem[];
+    onSyllabusItemCreate: () => void;
+    onSyllabusItemEdit: (item: ISyllabusItem) => void;
+    onSyllabusItemDelete: (item: ISyllabusItem) => void;
 }
 
-export default function SyllabusesTable(props : SyllabusesTableProps) {
+export default function SyllabusItemsTable(props: SyllabusItemsTableProps) {
     const {
-        syllabus,
-        onSyllabusCreate,
-        onSyllabusEdit,
-        onSyllabusDelete,
+        items,
+        onSyllabusItemCreate,
+        onSyllabusItemEdit,
+        onSyllabusItemDelete,
     } = props;
 
     return (
@@ -31,13 +30,13 @@ export default function SyllabusesTable(props : SyllabusesTableProps) {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => onSyllabusCreate()}
+                        onClick={() => onSyllabusItemCreate()}
                     >
-                        New Syllabus
+                        Add Item
                     </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label="courses table">
+                    <Table sx={{minWidth: 650}} aria-label="members table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -46,25 +45,21 @@ export default function SyllabusesTable(props : SyllabusesTableProps) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {syllabus.map((syllabus) => (
-                                <TableRow key={syllabus.id}>
+                            {items.map((item) => (
+                                <TableRow key={item.id}>
                                     <TableCell component="th" scope="row">
-                                        {syllabus.id}
+                                        {item.id}
                                     </TableCell>
-                                    <TableCell>{syllabus.name}</TableCell>
+                                    <TableCell>{item.name}</TableCell>
                                     <TableCell>
-                                        <Button component={Link} to={`/syllabuses/${syllabus.id}`}>
-                                            View
-                                        </Button>
                                         <Button
-                                            color="primary"
-                                            onClick={() => onSyllabusEdit(syllabus)}
+                                            onClick={() => onSyllabusItemEdit(item)}
                                         >
                                             Edit
                                         </Button>
                                         <Button
-                                            color="warning"
-                                            onClick={() => onSyllabusDelete(syllabus)}
+                                            color={"warning"}
+                                            onClick={() => onSyllabusItemDelete(item)}
                                         >
                                             Delete
                                         </Button>
