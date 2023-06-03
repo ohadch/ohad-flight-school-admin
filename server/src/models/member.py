@@ -25,3 +25,4 @@ class Member(Base):
     )
 
     documents = relationship("MemberDocument", back_populates="member")
+    enrollments = relationship("Enrollment", back_populates="member")

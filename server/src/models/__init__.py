@@ -4,3 +4,4 @@ from .course import Course
 from .syllabus import Syllabus
 from .course_syllabus import InstructionPlanSyllabus
 from .document_type import DocumentType
+from .enrollment import Enrollment

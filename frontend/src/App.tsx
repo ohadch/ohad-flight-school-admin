@@ -15,16 +15,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import List from '@mui/material/List';
 import {ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {Route, Routes, useLocation} from "react-router-dom";
-import MembersPage from "./pages/members/MembersPage.tsx";
-import MemberPage from "./pages/member/MemberPage.tsx";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import TableViewIcon from '@mui/icons-material/TableView';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import CoursesPage from "./pages/courses/CoursesPage.tsx";
-import SyllabusesPage from "./pages/syllabuses/SyllabusesPage.tsx";
-import CoursePage from "./pages/course/CoursePage.tsx";
 import BadgeIcon from '@mui/icons-material/Badge';
-import DocumentTypesPage from "./pages/documentTypes/DocumentTypesPage.tsx";
+import SchoolIcon from '@mui/icons-material/School';
 
 const DRAWER_WIDTH = 240;
 
@@ -37,33 +32,39 @@ const ROUTES = [
         name: "Members",
         path: "/members",
         icon: <PersonIcon/>,
-        element: <MembersPage/>,
+        element: React.lazy(() => import('./pages/members/MembersPage.tsx')),
     },
     {
         path: "/members/:id",
-        element: <MemberPage/>,
+        element: React.lazy(() => import('./pages/member/MemberPage.tsx')),
     },
     {
         name: "Courses",
         path: "/courses",
         icon: <TableViewIcon/>,
-        element: <CoursesPage />
+        element: React.lazy(() => import('./pages/courses/CoursesPage.tsx')),
+    },
+    {
+        name: "Enrollments",
+        path: "/enrollments",
+        icon: <SchoolIcon />,
+        element: React.lazy(() => import('./pages/enrollments/EnrollmentsPage.tsx')),
     },
     {
         path: "/courses/:id",
-        element: <CoursePage />
+        element: React.lazy(() => import('./pages/course/CoursePage.tsx')),
     },
     {
         name: "Syllabuses",
         path: "/syllabuses",
         icon: <TableRowsIcon />,
-        element: <SyllabusesPage />
+        element: React.lazy(() => import('./pages/syllabuses/SyllabusesPage.tsx')),
     },
     {
         name: "Document Types",
         path: "/document-types",
         icon: <BadgeIcon />,
-        element: <DocumentTypesPage />
+        element: React.lazy(() => import('./pages/documentTypes/DocumentTypesPage.tsx')),
     }
 ]
 
@@ -222,7 +223,15 @@ export default function App() {
                     <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
                         <Routes>
                             {ROUTES.map((route) => (
-                                <Route key={route.path} path={route.path} element={route.element}/>
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    element={
+                                    <React.Suspense fallback={<div></div>}>
+                                        <route.element />
+                                    </React.Suspense>
+                                    }
+                                />
                             ))}
                         </Routes>
                     </Container>
