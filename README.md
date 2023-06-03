@@ -1,4 +1,4 @@
-# Gliding Course Management System Server
+# Flight School Admin
 
 ## Local Development
 
