@@ -1,8 +1,22 @@
-import {Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    Button,
+    Chip,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tooltip
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import {ICourse, IMember, EnrollmentStatus, IEnrollment} from "../../@types";
 import {getDisplayNameByEnrollmentStatus} from "../../utils/enrollments.ts";
+import {Link} from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import TableViewIcon from "@mui/icons-material/TableView";
 
 export interface EnrollmentsTableProps {
     enrollments: IEnrollment[];
@@ -14,7 +28,7 @@ export interface EnrollmentsTableProps {
     member?: IMember;
 }
 
-export default function EnrollmentsTable(props : EnrollmentsTableProps) {
+export default function EnrollmentsTable(props: EnrollmentsTableProps) {
     const {
         member,
         enrollments,
@@ -69,20 +83,44 @@ export default function EnrollmentsTable(props : EnrollmentsTableProps) {
                                                 enrollment.status === EnrollmentStatus.COURSE_IN_PROGRESS
                                                     ? "primary"
                                                     : enrollment.status === EnrollmentStatus.COURSE_COMPLETED
-                                                    ? "success"
-                                                    : enrollment.status === EnrollmentStatus.CANCELED
-                                                    ? "error"
-                                                    : "default"
+                                                        ? "success"
+                                                        : enrollment.status === EnrollmentStatus.CANCELED
+                                                            ? "error"
+                                                            : "default"
                                             }
                                         />
                                     </TableCell>
                                     {member ? null : (
                                         <TableCell>
-                                            {getMemberById(enrollment.member_id)?.name}
+                                            <Tooltip
+                                                title={"View member"}
+                                                placement="top"
+                                            >
+                                                <Button
+                                                    component={Link}
+                                                    to={`/members/${enrollment.member_id}`}
+                                                    variant="text"
+                                                >
+                                                    <PersonIcon/>
+                                                    {getMemberById(enrollment.member_id)?.name}
+                                                </Button>
+                                            </Tooltip>
                                         </TableCell>
                                     )}
                                     <TableCell>
-                                        {getCourseById(enrollment.course_id)?.name}
+                                        <Tooltip
+                                            title={"View course"}
+                                            placement="top"
+                                        >
+                                            <Button
+                                                component={Link}
+                                                to={`/courses/${enrollment.course_id}`}
+                                                variant="text"
+                                            >
+                                                <TableViewIcon/>
+                                                {getCourseById(enrollment.course_id)?.name}
+                                            </Button>
+                                        </Tooltip>
                                     </TableCell>
                                     <TableCell>
                                         <Button
