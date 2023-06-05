@@ -123,6 +123,9 @@ export default function EnrollmentsTable(props: EnrollmentsTableProps) {
                                         </Tooltip>
                                     </TableCell>
                                     <TableCell>
+                                        <Button component={Link} to={`/enrollments/${enrollment.id}`}>
+                                            View
+                                        </Button>
                                         <Button
                                             color="primary"
                                             onClick={() => onEnrollmentEdit(enrollment)}

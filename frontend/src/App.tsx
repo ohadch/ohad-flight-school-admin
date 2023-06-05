@@ -45,14 +45,18 @@ const ROUTES = [
         element: React.lazy(() => import('./pages/courses/CoursesPage.tsx')),
     },
     {
+        path: "/courses/:id",
+        element: React.lazy(() => import('./pages/course/CoursePage.tsx')),
+    },
+    {
         name: "Enrollments",
         path: "/enrollments",
         icon: <SchoolIcon />,
         element: React.lazy(() => import('./pages/enrollments/EnrollmentsPage.tsx')),
     },
     {
-        path: "/courses/:id",
-        element: React.lazy(() => import('./pages/course/CoursePage.tsx')),
+        path: "/enrollments/:id",
+        element: React.lazy(() => import('./pages/enrollment/EnrollmentPage.tsx')),
     },
     {
         name: "Syllabuses",
