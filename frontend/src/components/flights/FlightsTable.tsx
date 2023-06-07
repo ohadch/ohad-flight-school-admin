@@ -51,7 +51,7 @@ export default function FlightsTable(props : FlightsTableProps) {
                                 <TableCell>Student</TableCell>
                                 <TableCell>Instructor</TableCell>
                                 <TableCell>Date</TableCell>
-                                <TableCell>Duration</TableCell>
+                                <TableCell>Duration (Hours)</TableCell>
                                 <TableCell>Solo</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
