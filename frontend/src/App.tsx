@@ -76,6 +76,10 @@ const ROUTES = [
         element: React.lazy(() => import('./pages/flights/FlightsPage.tsx')),
     },
     {
+        path: "/flights/:id",
+        element: React.lazy(() => import('./pages/flight/FlightPage.tsx')),
+    },
+    {
         name: "Document Types",
         path: "/document-types",
         icon: <BadgeIcon />,

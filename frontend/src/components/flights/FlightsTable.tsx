@@ -3,6 +3,7 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import MemberButton from "../members/MemberButton.tsx";
+import {Link} from "react-router-dom";
 
 export interface FlightsTableProps {
     flights: IFlight[];
@@ -51,7 +52,7 @@ export default function FlightsTable(props : FlightsTableProps) {
                                 <TableCell>Student</TableCell>
                                 <TableCell>Instructor</TableCell>
                                 <TableCell>Date</TableCell>
-                                <TableCell>Duration</TableCell>
+                                <TableCell>Duration (Hours)</TableCell>
                                 <TableCell>Solo</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
@@ -78,6 +79,9 @@ export default function FlightsTable(props : FlightsTableProps) {
                                     <TableCell>{flight.duration_hours}</TableCell>
                                     <TableCell>{flight.solo ? "Yes" : "No"}</TableCell>
                                     <TableCell>
+                                        <Button component={Link} to={`/flights/${flight.id}`}>
+                                            View
+                                        </Button>
                                         <Button
                                             color="primary"
                                             onClick={() => onFlightEdit(flight)}

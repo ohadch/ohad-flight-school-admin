@@ -11,6 +11,11 @@ class DemonstrationsApiService extends ModelApi<IDemonstration, IDemonstrationCr
         const response = await axios.get<IDemonstration[]>(`${this.API_URL}${this.endpoint}/?enrollment_id=${enrollmentId}`);
         return response.data;
     }
+
+    async getDemonstrationsByFlightId(flightId: number): Promise<IDemonstration[]> {
+        const response = await axios.get<IDemonstration[]>(`${this.API_URL}${this.endpoint}/?flight_id=${flightId}`);
+        return response.data;
+    }
 }
 
 export const demonstrationsApiService = new DemonstrationsApiService();
