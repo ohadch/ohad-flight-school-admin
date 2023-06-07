@@ -1,7 +1,12 @@
 import {Link, useParams} from "react-router-dom";
 import {ICourse, IEnrollment, IMember} from "../../@types";
 import {useEffect, useState} from "react";
-import {enrollmentsApiService, coursesApiService, membersApiService} from "../../services/api";
+import {
+    enrollmentsApiService,
+    coursesApiService,
+    membersApiService,
+    demonstrationsApiService
+} from "../../services/api";
 import {Grid, Tooltip} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import EnrollmentSyllabusContainer from "./EnrollmentSyllabusContainer.tsx";
@@ -12,7 +17,8 @@ export default function EnrollmentPage() {
     const enrollmentId = parseFloat(id as string)
     const [member, setMember] = useState<IMember | null>(null);
     const [course, setCourse] = useState<ICourse | null>(null);
-    const [syllabuses, setSyllabuses] = useState<any[] | null>(null); // TODO: replace any with ISyllabus
+    const [syllabuses, setSyllabuses] = useState<any[] | null>(null);
+    const [demonstrations, setDemonstrations] = useState<any[] | null>(null);
 
     useEffect( () => {
         (async () => {
@@ -33,6 +39,13 @@ export default function EnrollmentPage() {
                         course.id
                     )
                     setSyllabuses(syllabuses);
+                }
+
+                if (!demonstrations) {
+                    const demonstrations = await demonstrationsApiService.getDemonstrationsByEnrollmentId(
+                        enrollment.id
+                    )
+                    setDemonstrations(demonstrations);
                 }
             }
         })()
@@ -79,10 +92,11 @@ export default function EnrollmentPage() {
             {syllabuses && syllabuses.map((syllabus) => (
                 <Grid item xs={12} key={syllabus.id}>
                     <h2>{syllabus.name}</h2>
-                    <EnrollmentSyllabusContainer
+                    {demonstrations && <EnrollmentSyllabusContainer
                         syllabus={syllabus}
                         enrollment={enrollment}
-                    />
+                        demonstrations={demonstrations}
+                    />}
                 </Grid>
             ))}
         </Grid>

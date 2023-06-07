@@ -1,13 +1,42 @@
-import {ISyllabusItem} from "../../@types";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {IDemonstration, ISyllabusItem} from "../../@types";
+import {Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import Box from "@mui/material/Box";
 
-export interface EnrollmentSyllabusProgressProps {
+export interface EnrollmentSyllabusTableProps {
     items: ISyllabusItem[];
+    demonstrations: IDemonstration[];
 }
 
-export default function EnrollmentSyllabusTable(props: EnrollmentSyllabusProgressProps) {
-    const {items} = props;
+export default function EnrollmentSyllabusTable(props: EnrollmentSyllabusTableProps) {
+    const {items, demonstrations} = props;
+
+    function renderSyllabusItemStatus(item: ISyllabusItem) {
+        if (!demonstrations) {
+            return null;
+        }
+
+        const sufficientDemonstrationExists = demonstrations
+            .some((demonstration) => (
+                demonstration.syllabus_item_id === item.id
+                && demonstration.sufficient
+            ))
+
+        if (sufficientDemonstrationExists) {
+            return (
+                <Chip
+                    label="Completed"
+                    color="success"
+                />
+            )
+        }
+
+        return (
+            <Chip
+                label="Incomplete"
+                color="error"
+            />
+        )
+    }
 
     return (
         <Box>
@@ -22,7 +51,7 @@ export default function EnrollmentSyllabusTable(props: EnrollmentSyllabusProgres
                         <TableHead>
                             <TableRow>
                                 <TableCell>Item</TableCell>
-                                <TableCell align="right">Status</TableCell>
+                                <TableCell align="right">Completed</TableCell>
                                 <TableCell align="right">Actions</TableCell>
                             </TableRow>
                         </TableHead>
@@ -32,7 +61,9 @@ export default function EnrollmentSyllabusTable(props: EnrollmentSyllabusProgres
                                     <TableCell component="th" scope="row">
                                         {item.name}
                                     </TableCell>
-                                    <TableCell align="right">TBD</TableCell>
+                                    <TableCell align="right">
+                                        {renderSyllabusItemStatus(item)}
+                                    </TableCell>
                                     <TableCell align="right">TBD</TableCell>
                                 </TableRow>
                             ))}

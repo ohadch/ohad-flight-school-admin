@@ -15,8 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import {ICourse, IMember, EnrollmentStatus, IEnrollment} from "../../@types";
 import {getDisplayNameByEnrollmentStatus} from "../../utils/enrollments.ts";
 import {Link} from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
 import TableViewIcon from "@mui/icons-material/TableView";
+import MemberButton from "../members/MemberButton.tsx";
 
 export interface EnrollmentsTableProps {
     enrollments: IEnrollment[];
@@ -92,19 +92,11 @@ export default function EnrollmentsTable(props: EnrollmentsTableProps) {
                                     </TableCell>
                                     {member ? null : (
                                         <TableCell>
-                                            <Tooltip
-                                                title={"View member"}
-                                                placement="top"
-                                            >
-                                                <Button
-                                                    component={Link}
-                                                    to={`/members/${enrollment.member_id}`}
-                                                    variant="text"
-                                                >
-                                                    <PersonIcon/>
-                                                    {getMemberById(enrollment.member_id)?.name}
-                                                </Button>
-                                            </Tooltip>
+                                            {getMemberById(enrollment.member_id) && (
+                                                <MemberButton
+                                                    member={getMemberById(enrollment.member_id)!}
+                                                />
+                                            )}
                                         </TableCell>
                                     )}
                                     <TableCell>

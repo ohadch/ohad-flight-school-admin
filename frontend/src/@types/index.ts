@@ -5,3 +5,5 @@ export * from "./models/DocumentType";
 export * from "./models/MemberDocument";
 export * from "./models/Enrollment";
 export * from "./models/SyllabusItem";
+export * from "./models/Demonstration";
+export * from "./models/Flight";

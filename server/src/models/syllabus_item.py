@@ -24,3 +24,4 @@ class SyllabusItem(Base):
     )
 
     syllabus = relationship("Syllabus", back_populates="items")
+    demonstrations = relationship("Demonstration", back_populates="syllabus_item")

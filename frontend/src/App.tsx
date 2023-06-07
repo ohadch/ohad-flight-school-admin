@@ -20,6 +20,7 @@ import TableViewIcon from '@mui/icons-material/TableView';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SchoolIcon from '@mui/icons-material/School';
+import FlightIcon from '@mui/icons-material/Flight';
 
 const DRAWER_WIDTH = 240;
 
@@ -67,6 +68,12 @@ const ROUTES = [
     {
         path: "/syllabuses/:id",
         element: React.lazy(() => import('./pages/syllabus/SyllabusPage.tsx')),
+    },
+    {
+        name: "Flights",
+        path: "/flights",
+        icon: <FlightIcon />,
+        element: React.lazy(() => import('./pages/flights/FlightsPage.tsx')),
     },
     {
         name: "Document Types",

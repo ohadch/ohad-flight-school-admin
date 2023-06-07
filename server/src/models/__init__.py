@@ -6,3 +6,5 @@ from .course_syllabus import InstructionPlanSyllabus
 from .document_type import DocumentType
 from .enrollment import Enrollment
 from .syllabus_item import SyllabusItem
+from .demonstration import Demonstration
+from .flight import Flight
