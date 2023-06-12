@@ -1,10 +1,9 @@
 import {useParams} from "react-router-dom";
 import {IFlight} from "../../@types";
 import {useEffect, useState} from "react";
-import FlightSyllabusesContainer
-    from "../../components/flightSyllabuses/FlightSyllabusesContainer.tsx";
 import {flightsApiService} from "../../services/api";
 import DemonstrationsTable from "../../components/demonstrations/DemonstrationsTable.tsx";
+import FlightDemonstrationsTableContainer from "../../components/flights/FlightDemonstrationsTableContainer.tsx";
 
 export default function FlightPage() {
     const {id} = useParams();
@@ -26,7 +25,7 @@ export default function FlightPage() {
     return (
         <div>
             <h1>Flight ID: {flight.id}</h1>
-            <DemonstrationsTable
+            <FlightDemonstrationsTableContainer
                 flight={flight}
             />
         </div>
