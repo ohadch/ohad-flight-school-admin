@@ -6,3 +6,6 @@ migrate:
 
 rollback:
 	alembic downgrade -1
+
+create-seed-data:
+	python cli.py create-seed-data
