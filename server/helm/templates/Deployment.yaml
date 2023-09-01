@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ohad-flight-school-admin-server-deployment
+  labels:
+    app: ohad-flight-school-admin-server
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          app: ohad-flight-school-admin-server
+    template:
+        metadata:
+          labels:
+              app: ohad-flight-school-admin-server
+        spec:
+          containers:
+              - name: ohad-flight-school-admin-server
+                image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+                ports:
+                    - containerPort: 8000
+                env:
+                  {{- range $key, $value := .Values.env }}
+                  - name: {{ $key }}
+                    value: {{ $value | quote }}
+                  {{- end }}
+                imagePullPolicy: {{ .Values.image.pullPolicy }}

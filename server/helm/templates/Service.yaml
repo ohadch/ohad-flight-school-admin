@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ohad-flight-school-admin-server-service
+  labels:
+    app: ohad-flight-school-admin-server
+spec:
+  type: LoadBalancer
+  ports:
+      - port: 8000
+        targetPort: 8000
+        protocol: TCP
+  selector:
+    app: ohad-flight-school-admin-server

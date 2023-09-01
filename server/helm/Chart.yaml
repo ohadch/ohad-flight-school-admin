@@ -1,0 +1,4 @@
+apiVersion: v1
+name: ohad-flight-school-admin-server
+version: 0.0.1
+description: A Helm chart for Ohad's Flight School Admin Server

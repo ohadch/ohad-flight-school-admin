@@ -1,0 +1,6 @@
+dependencies:
+- name: ohad-flight-school-admin-server
+  repository: file://../../server/helm
+  version: 0.0.1
+digest: sha256:54427cf3235d7bc74f450540d87808fbf174c785117bc1b1264ee96dcfff8706
+generated: "2023-08-26T18:20:23.600531+03:00"
