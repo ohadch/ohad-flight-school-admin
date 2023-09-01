@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from src.config.dependencies import get_db
-from src.models import Course, InstructionPlanSyllabus
+from src.models import Course, CourseSyllabus
 from src.schemas.course import CourseSchema, CourseCreateSchema, CourseUpdateSchema
 from src.schemas.course_syllabus import InstructionPlanSyllabusSchema
 from src.schemas.syllabus import SyllabusSchema
@@ -26,7 +26,7 @@ async def read_course(course_id: int, db: Session = Depends(get_db)):
 
 @router.get("/{course_id}/syllabuses", response_model=list[SyllabusSchema])
 async def read_course_syllabuses(course_id: int, db: Session = Depends(get_db)):
-    course_syllabuses_connections = db.query(InstructionPlanSyllabus).filter_by(
+    course_syllabuses_connections = db.query(CourseSyllabus).filter_by(
         course_id=course_id
     )
 
@@ -38,7 +38,7 @@ async def read_course_syllabuses(course_id: int, db: Session = Depends(get_db)):
 
 @router.post("/{course_id}/syllabuses", response_model=InstructionPlanSyllabusSchema)
 async def add_syllabus_to_course(course_id: int, syllabus_id: int, db: Session = Depends(get_db)):
-    course_syllabus = InstructionPlanSyllabus(
+    course_syllabus = CourseSyllabus(
         course_id=course_id,
         syllabus_id=syllabus_id,
     )
@@ -50,7 +50,7 @@ async def add_syllabus_to_course(course_id: int, syllabus_id: int, db: Session =
 
 @router.delete("/{course_id}/syllabuses")
 async def remove_syllabus_from_course(course_id: int, syllabus_id: int, db: Session = Depends(get_db)):
-    course_syllabus = db.query(InstructionPlanSyllabus).filter_by(
+    course_syllabus = db.query(CourseSyllabus).filter_by(
         course_id=course_id,
         syllabus_id=syllabus_id,
     ).first()
