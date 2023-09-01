@@ -27,4 +27,3 @@ class MemberDocument(Base):
 
     member = relationship("Member", back_populates="documents")
     type = relationship("DocumentType")
-

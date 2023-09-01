@@ -32,11 +32,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5443:5432"
+      - "5442:5432"
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s
       timeout: 5s
       retries: 3
     volumes:
-      - ./volumes/db-prod:/var/lib/postgresql/data
+      - ./volumes/db-dev:/var/lib/postgresql/data

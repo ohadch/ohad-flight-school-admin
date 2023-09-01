@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from src.config.database import Base
 
 
-class InstructionPlanSyllabus(Base):
+class CourseSyllabus(Base):
 
     __tablename__ = "course_syllabuses"
 
