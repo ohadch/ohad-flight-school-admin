@@ -4,6 +4,7 @@ import typer
 
 # This MUST be imported before any other modules
 import dotenv
+
 dotenv.load_dotenv()
 
 from src.models.enrollment import EnrollmentStatus
@@ -11,7 +12,15 @@ from src.models.member import MemberStatus
 
 
 from src.config.database import Base, engine
-from src.models import Course, Syllabus, CourseSyllabus, DocumentType, SyllabusItem, Member, MemberDocument, Enrollment
+from src.models import (
+    Course,
+    Syllabus,
+    CourseSyllabus,
+    DocumentType,
+    SyllabusItem,
+    Member,
+    Enrollment,
+)
 
 app = typer.Typer()
 
@@ -29,6 +38,7 @@ def create_seed_data():
     Base.metadata.create_all(bind=engine)
 
     from src.config.database import SessionLocal
+
     db = SessionLocal()
 
     if db.query(Course).count() > 0:
@@ -37,7 +47,9 @@ def create_seed_data():
 
     # Create courses
     typer.echo("Creating courses...")
-    private_glider_pilot_zero_to_hero_course = Course(name="Private Glider Pilot - Zero to Hero")
+    private_glider_pilot_zero_to_hero_course = Course(
+        name="Private Glider Pilot - Zero to Hero"
+    )
     private_glider_pilot_add_on_for_airplane_pilots_course = Course(
         name="Private Glider Pilot - Add-on for Airplane Pilots"
     )
@@ -55,7 +67,7 @@ def create_seed_data():
             SyllabusItem(name="Aerotow"),
             SyllabusItem(name="Landing"),
             SyllabusItem(name="Emergency Procedures"),
-        ]
+        ],
     )
     private_glider_pilot_before_solo_flights_syllabus = Syllabus(
         name="Private Glider Pilot: Before Solo Flights",
@@ -80,7 +92,7 @@ def create_seed_data():
             SyllabusItem(name="Takeoff and Landing in a Crosswind"),
             SyllabusItem(name="Full Spin"),
             SyllabusItem(name="Spiral Dive"),
-        ]
+        ],
     )
     private_glider_pilot_solo_flights_syllabus = Syllabus(
         name="Private Glider Pilot: Solo Flights",
@@ -91,7 +103,7 @@ def create_seed_data():
             SyllabusItem(name="30 degree turns"),
             SyllabusItem(name="45 degree turns"),
             SyllabusItem(name="60 degree turns"),
-        ]
+        ],
     )
     private_glider_pilot_zero_to_hero_theoretical_exams_syllabus = Syllabus(
         name="Private Glider Pilot - Zero to Hero: Theoretical Exams",
@@ -103,14 +115,16 @@ def create_seed_data():
             SyllabusItem(name="Navigation"),
             SyllabusItem(name="Radio Telephony"),
             SyllabusItem(name="Human Performance"),
-        ]
+        ],
     )
-    private_glider_pilot_add_on_for_airplane_pilots_theoretical_exams_syllabus = Syllabus(
-        name="Private Glider Pilot - Add-on for Airplane Pilots: Theoretical Exams",
-        items=[
-            SyllabusItem(name="Combined Air Law and General Technical Knowledge"),
-            SyllabusItem(name="Glider Manual"),
-        ]
+    private_glider_pilot_add_on_for_airplane_pilots_theoretical_exams_syllabus = (
+        Syllabus(
+            name="Private Glider Pilot - Add-on for Airplane Pilots: Theoretical Exams",
+            items=[
+                SyllabusItem(name="Combined Air Law and General Technical Knowledge"),
+                SyllabusItem(name="Glider Manual"),
+            ],
+        )
     )
     db.add(private_glider_pilot_classroom_lessons_syllabus)
     db.add(private_glider_pilot_before_solo_flights_syllabus)
@@ -169,41 +183,60 @@ def create_seed_data():
     # Create members
     typer.echo("Creating members...")
     for item in [
-        Member(name="Amy Vine", status=MemberStatus.BEFORE_SOLO_STUDENT, enrollments=[
-            Enrollment(
-                course=private_glider_pilot_zero_to_hero_course,
-                status=EnrollmentStatus.PENDING,
-            ),
-        ]),
-        Member(name="John Doe", status=MemberStatus.BEFORE_SOLO_STUDENT, enrollments=[
-            Enrollment(
-                course=private_glider_pilot_zero_to_hero_course,
-                status=EnrollmentStatus.COURSE_IN_PROGRESS,
-            ),
-        ]),
-        Member(name="Jane Eilish", status=MemberStatus.BEFORE_SOLO_STUDENT, enrollments=[
-            Enrollment(
-                course=private_glider_pilot_zero_to_hero_course,
-                status=EnrollmentStatus.COURSE_IN_PROGRESS,
-            ),
-        ]),
-        Member(name="Bob Pearl", status=MemberStatus.SOLO_STUDENT, enrollments=[
-            Enrollment(
-                course=private_glider_pilot_zero_to_hero_course,
-                status=EnrollmentStatus.COURSE_IN_PROGRESS,
-            ),
-        ]),
-        Member(name="Allie Sherlock", status=MemberStatus.PRIVATE_PILOT, enrollments=[
-            Enrollment(
-                course=private_glider_pilot_zero_to_hero_course,
-                status=EnrollmentStatus.COURSE_COMPLETED,
-            ),
-        ]),
+        Member(
+            name="Amy Vine",
+            status=MemberStatus.BEFORE_SOLO_STUDENT,
+            enrollments=[
+                Enrollment(
+                    course=private_glider_pilot_zero_to_hero_course,
+                    status=EnrollmentStatus.PENDING,
+                ),
+            ],
+        ),
+        Member(
+            name="John Doe",
+            status=MemberStatus.BEFORE_SOLO_STUDENT,
+            enrollments=[
+                Enrollment(
+                    course=private_glider_pilot_zero_to_hero_course,
+                    status=EnrollmentStatus.COURSE_IN_PROGRESS,
+                ),
+            ],
+        ),
+        Member(
+            name="Jane Eilish",
+            status=MemberStatus.BEFORE_SOLO_STUDENT,
+            enrollments=[
+                Enrollment(
+                    course=private_glider_pilot_zero_to_hero_course,
+                    status=EnrollmentStatus.COURSE_IN_PROGRESS,
+                ),
+            ],
+        ),
+        Member(
+            name="Bob Pearl",
+            status=MemberStatus.SOLO_STUDENT,
+            enrollments=[
+                Enrollment(
+                    course=private_glider_pilot_zero_to_hero_course,
+                    status=EnrollmentStatus.COURSE_IN_PROGRESS,
+                ),
+            ],
+        ),
+        Member(
+            name="Allie Sherlock",
+            status=MemberStatus.PRIVATE_PILOT,
+            enrollments=[
+                Enrollment(
+                    course=private_glider_pilot_zero_to_hero_course,
+                    status=EnrollmentStatus.COURSE_COMPLETED,
+                ),
+            ],
+        ),
         Member(name="Robert Kowalski", status=MemberStatus.CFI),
         Member(name="Arianna Smith", status=MemberStatus.CFI),
     ]:
         db.add(item)
-
 
     db.commit()
 

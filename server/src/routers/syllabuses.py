@@ -3,7 +3,11 @@ from sqlalchemy.orm import Session
 
 from src.config.dependencies import get_db
 from src.models import Syllabus
-from src.schemas.syllabus import SyllabusSchema, SyllabusCreateSchema, SyllabusUpdateSchema
+from src.schemas.syllabus import (
+    SyllabusSchema,
+    SyllabusCreateSchema,
+    SyllabusUpdateSchema,
+)
 
 router = APIRouter(
     prefix="/syllabuses",
@@ -23,7 +27,9 @@ async def read_syllabus(syllabus_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=SyllabusSchema)
-async def create_syllabus(syllabus_schema: SyllabusCreateSchema, db: Session = Depends(get_db)):
+async def create_syllabus(
+    syllabus_schema: SyllabusCreateSchema, db: Session = Depends(get_db)
+):
     syllabus = Syllabus(**syllabus_schema.__dict__)
     db.add(syllabus)
     db.commit()
@@ -32,7 +38,11 @@ async def create_syllabus(syllabus_schema: SyllabusCreateSchema, db: Session = D
 
 
 @router.put("/{syllabus_id}", response_model=SyllabusSchema)
-async def update_syllabus(syllabus_id: int, syllabus_schema: SyllabusUpdateSchema, db: Session = Depends(get_db)):
+async def update_syllabus(
+    syllabus_id: int,
+    syllabus_schema: SyllabusUpdateSchema,
+    db: Session = Depends(get_db),
+):
     syllabus = db.query(Syllabus).get(syllabus_id)
     for key, value in syllabus_schema.__dict__.items():
         setattr(syllabus, key, value)

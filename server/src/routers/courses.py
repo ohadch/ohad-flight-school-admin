@@ -37,7 +37,9 @@ async def read_course_syllabuses(course_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/{course_id}/syllabuses", response_model=InstructionPlanSyllabusSchema)
-async def add_syllabus_to_course(course_id: int, syllabus_id: int, db: Session = Depends(get_db)):
+async def add_syllabus_to_course(
+    course_id: int, syllabus_id: int, db: Session = Depends(get_db)
+):
     course_syllabus = CourseSyllabus(
         course_id=course_id,
         syllabus_id=syllabus_id,
@@ -49,18 +51,26 @@ async def add_syllabus_to_course(course_id: int, syllabus_id: int, db: Session =
 
 
 @router.delete("/{course_id}/syllabuses")
-async def remove_syllabus_from_course(course_id: int, syllabus_id: int, db: Session = Depends(get_db)):
-    course_syllabus = db.query(CourseSyllabus).filter_by(
-        course_id=course_id,
-        syllabus_id=syllabus_id,
-    ).first()
+async def remove_syllabus_from_course(
+    course_id: int, syllabus_id: int, db: Session = Depends(get_db)
+):
+    course_syllabus = (
+        db.query(CourseSyllabus)
+        .filter_by(
+            course_id=course_id,
+            syllabus_id=syllabus_id,
+        )
+        .first()
+    )
     db.delete(course_syllabus)
     db.commit()
     return {"message": "Syllabus removed from instruction plan successfully."}
 
 
 @router.post("/", response_model=CourseSchema)
-async def create_course(course_schema: CourseCreateSchema, db: Session = Depends(get_db)):
+async def create_course(
+    course_schema: CourseCreateSchema, db: Session = Depends(get_db)
+):
     course = Course(**course_schema.__dict__)
     db.add(course)
     db.commit()
@@ -69,7 +79,9 @@ async def create_course(course_schema: CourseCreateSchema, db: Session = Depends
 
 
 @router.put("/{course_id}", response_model=CourseSchema)
-async def update_course(course_id: int, course_schema: CourseUpdateSchema, db: Session = Depends(get_db)):
+async def update_course(
+    course_id: int, course_schema: CourseUpdateSchema, db: Session = Depends(get_db)
+):
     course = db.query(Course).get(course_id)
     for key, value in course_schema.__dict__.items():
         setattr(course, key, value)

@@ -43,7 +43,7 @@ export default function CourseSyllabusesContainer(props: CourseSyllabusesContain
         if (!confirm(`Are you sure you want to remove syllabus "${syllabus.name}" from course "${course.name}"?`)) {
             return
         }
-        
+
         coursesApiService.removeSyllabusFromCourse(
             course.id,
             syllabus.id

@@ -3,12 +3,18 @@ import os
 import dotenv
 from starlette.middleware.cors import CORSMiddleware
 
-dotenv.load_dotenv(
-    dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env")
-)
+dotenv.load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 from fastapi import FastAPI
 
-from src.routers import members, member_documents, courses, syllabuses, document_types, enrollments, syllabus_items
+from src.routers import (
+    members,
+    member_documents,
+    courses,
+    syllabuses,
+    document_types,
+    enrollments,
+    syllabus_items,
+)
 
 app = FastAPI()
 app.add_middleware(
